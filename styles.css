@@ -16,3 +16,9 @@ body{
     margin: 0;
     font-family: 'Pixelify Sans', sans-serif;
 }
+.start-background {
+    position: relative;
+}
+.start-button {
+    position: absolute;
+}

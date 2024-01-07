@@ -537,9 +537,10 @@ function animate() {
     }
 
     frames++
-}
 
-animate();
+    removeEventListener("click", animate);
+}
+addEventListener("click", animate);
 
 addEventListener("keydown", ({key}) => {
     if (game.over) return
