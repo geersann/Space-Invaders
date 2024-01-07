@@ -53,6 +53,7 @@ class StartBackground {
             y: 0
         }
 
+        this.opacity = 1
         const image = new Image()
         image.src = "./img/startScreenBackground.png"
         image.onload = () => {
@@ -375,6 +376,15 @@ function createParticles({object, color, fades}) {
       )
     }
 }
+
+function animateBackground() {
+    requestAnimationFrame(animateBackground)
+    c.fillStyle = "black"
+    c.fillRect(0, 0, canvas.width, canvas.height)
+    background.draw()
+    button.draw()
+}
+animateBackground();
 
 function animate() {
     if (!game.active) return
