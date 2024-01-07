@@ -8,6 +8,71 @@ canvas.height = 576
 canvas.width = innerWidth
 canvas.height = innerHeight
 
+
+class StartButton {
+    constructor() {
+        this.position = {
+            x: 1130,
+            y: 800
+        }
+
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+
+        const image = new Image()
+        image.src = "./img/button.png"
+        image.onload = () => {
+            this.image = image
+            this.width = image.width / 0.4
+            this.height = image.height / 0.4
+        }
+    }
+    draw() {
+            if(this.image)
+                c.drawImage(
+                    this.image,
+                    this.position.x,
+                    this.position.y,
+                    this.width,
+                    this.height
+            )
+    }
+}
+
+class StartBackground {
+    constructor() {
+        this.position = {
+            x: 570,
+            y: 300
+        }
+
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+
+        const image = new Image()
+        image.src = "./img/startScreenBackground.png"
+        image.onload = () => {
+            this.image = image
+            this.width = image.width / 0.5
+            this.height = image.height / 0.5
+        }
+    }
+    draw() {
+            if(this.image)
+                c.drawImage(
+                    this.image,
+                    this.position.x,
+                    this.position.y,
+                    this.width,
+                    this.height
+            )
+    }
+}
+
 class Player {
     constructor() {
         this.velocity = {
@@ -247,6 +312,10 @@ class Grid {
 }
 
 const player = new Player()
+const background = new StartBackground();
+background.draw()
+const button = new StartButton();
+button.draw()
 const Projectiles = [];
 const grids = [];
 const invaderProjectiles = [];
@@ -268,7 +337,7 @@ let frames = 0
 let randomInterval = Math.floor(Math.random() * 500 + 500);
 let game = {
     over: false,
-    active: true
+    active: true,
 }
 let score = 0
 
@@ -312,6 +381,8 @@ function animate() {
     requestAnimationFrame(animate)
     c.fillStyle = "black"
     c.fillRect(0, 0, canvas.width, canvas.height)
+    background.draw()
+    button.draw()
     player.update()
     particles.forEach((particle, i) => {
 
@@ -348,7 +419,6 @@ function animate() {
                 InvaderProjectile.position.x <= player.position.x +
                 player.width
                 ) {
-                    console.log("you lose")
 
                     setTimeout(() => {
                         invaderProjectiles.splice(index, 1)
