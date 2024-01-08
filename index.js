@@ -27,17 +27,50 @@ class StartButton {
             this.image = image
             this.width = image.width / 0.4
             this.height = image.height / 0.4
+
+            this.addEventListeners();
         }
     }
+
+    addEventListeners() {
+        canvas.addEventListener("click", this.handleCanvasClick.bind(this));
+    }
+
+    // addEventListener for canvas click
+    handleCanvasClick(event) {
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+        if (
+            mouseX >= this.position.x &&
+            mouseX <= this.position.x + this.width &&
+            mouseY >= this.position.y &&
+            mouseY <= this.position.y + this.height
+        ) {
+            this.animateBackground();
+        }
+    }
+
+    animateBackground() {
+        player.opacity = 1;
+        game.over = false;
+        frames = 0;
+
+        const scoreTab = document.querySelector(".score-tab");
+        scoreTab.classList.toggle("active");
+
+        canvas.removeEventListener("click", this.handleCanvasClick.bind(this));
+    }
+
     draw() {
-            if(this.image)
-                c.drawImage(
-                    this.image,
-                    this.position.x,
-                    this.position.y,
-                    this.width,
-                    this.height
-            )
+        if (this.image)
+            c.drawImage(
+                this.image,
+                this.position.x,
+                this.position.y,
+                this.width,
+                this.height
+            );
     }
 }
 
@@ -377,18 +410,18 @@ function createParticles({object, color, fades}) {
     }
 }
 
-function animateBackground() {
-    player.opacity = 1;
-    game.over = false;
-    frames = 0;
+// function animateBackground() {
+//     player.opacity = 1;
+//     game.over = false;
+//     frames = 0;
 
-    const scoreTab = document.querySelector(".score-tab"); 
-    scoreTab.classList.toggle("active");
+//     const scoreTab = document.querySelector(".score-tab"); 
+//     scoreTab.classList.toggle("active");
 
-    removeEventListener("click", animateBackground);
-}
+//     removeEventListener("click", animateBackground);
+// }
 
-addEventListener("click", animateBackground);
+// addEventListener("click", animateBackground);
 
 function animate() {
     if (!game.active) return
