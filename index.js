@@ -9,6 +9,9 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 
+const playerShoot = new Audio ("./sounds/shoot.wav");
+playerShoot.volume = 0.1
+
 class StartButton {
     constructor() {
         this.position = {
@@ -605,6 +608,7 @@ addEventListener("keydown", ({key}) => {
             break; 
         case " ":
             // console.log("space")
+            playerShoot.play()
             Projectiles.push(
                     new Projectile({
                 position: {
