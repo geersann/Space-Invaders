@@ -82,7 +82,7 @@ class Player {
         }
 
         this.rotation = 0
-        this.opacity = 1
+        this.opacity = 0
 
         const image = new Image()
         image.src = "./img/spaceship.png"
@@ -295,7 +295,6 @@ class Grid {
                     )
                 }
         }    
-        console.log(this.invaders)
     }
 
     update() {
@@ -312,6 +311,7 @@ class Grid {
     }
 }
 
+let frames;
 const player = new Player()
 const background = new StartBackground();
 background.draw()
@@ -334,10 +334,10 @@ const keys = {
     },
 }
 
-let frames = 0
+
 let randomInterval = Math.floor(Math.random() * 500 + 500);
 let game = {
-    over: false,
+    over: true,
     active: true,
 }
 let score = 0
@@ -378,13 +378,17 @@ function createParticles({object, color, fades}) {
 }
 
 function animateBackground() {
-    requestAnimationFrame(animateBackground)
-    c.fillStyle = "black"
-    c.fillRect(0, 0, canvas.width, canvas.height)
-    background.draw()
-    button.draw()
+    player.opacity = 1;
+    game.over = false;
+    frames = 0;
+
+    const scoreTab = document.querySelector(".score-tab"); 
+    scoreTab.classList.toggle("active");
+
+    removeEventListener("click", animateBackground);
 }
-animateBackground();
+
+addEventListener("click", animateBackground);
 
 function animate() {
     if (!game.active) return
@@ -438,6 +442,9 @@ function animate() {
 
                     setTimeout(() => {
                         game.active = false
+                        const scoreTab = document.querySelector(".score-tab");
+                        scoreTab.classList.remove("active");
+                        
                     }, 2000)
 
                     createParticles({
@@ -538,19 +545,17 @@ function animate() {
         player.rotation = 0
     }
     
-    // spawnung enemies
+    //spawning enemies
     if(frames % randomInterval === 0) {
         grids.push(new Grid())
         randomInterval = Math.floor(Math.random() * 500 + 500)
         frames = 0
-        
+            
     }
 
     frames++
-
-    removeEventListener("click", animate);
 }
-addEventListener("click", animate);
+animate();
 
 addEventListener("keydown", ({key}) => {
     if (game.over) return
