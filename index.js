@@ -8,9 +8,24 @@ canvas.height = 576
 canvas.width = innerWidth
 canvas.height = innerHeight
 
+const soundsEffect = {
 
-const playerShoot = new Audio ("./sounds/shoot.wav");
-playerShoot.volume = 0.1
+    playerShootSound: new Audio("./sounds/shoot.wav"),
+    explodeSound: new Audio("./sounds/explode.wav"),
+    enemyShootSound: new Audio("./sounds/enemyShoot.wav"),
+    gameOverSound: new Audio("./sounds/gameOver.mp3"),
+    gameStartSound: new Audio("./sounds/start.mp3"),
+    selectSound: new Audio("./sounds/select.mp3"),
+    backgroundSound: new Audio("./sounds/backgroundMusic.wav")
+};
+
+soundsEffect.playerShootSound.volume = 0.1;
+soundsEffect.explodeSound.volume = 0.3;
+soundsEffect.enemyShootSound.volume = 0.2;
+soundsEffect.gameOverSound.volume = 0.1;
+soundsEffect.gameStartSound.volume = 0.1;
+soundsEffect.selectSound.volume = 0.1;
+soundsEffect.backgroundSound.volume = 0.5;
 
 class StartButton {
     constructor() {
@@ -34,11 +49,10 @@ class StartButton {
             this.addEventListeners();
         }
     }
-
+    
     addEventListeners() {
         canvas.addEventListener("click", this.handleCanvasClick.bind(this));
     }
-
     // addEventListener for canvas click
     handleCanvasClick(event) {
         const mouseX = event.clientX - canvas.getBoundingClientRect().left;
@@ -51,10 +65,16 @@ class StartButton {
             mouseY <= this.position.y + this.height
         ) {
             this.animateBackground();
+            soundsEffect.selectSound.play();
         }
     }
-
     animateBackground() {
+        setTimeout(() => {
+            soundsEffect.gameStartSound.play();
+        }, 300);
+        setTimeout(() => {
+            soundsEffect.backgroundSound.play();
+        }, 1000)
         player.opacity = 1;
         game.over = false;
         frames = 0;
@@ -413,19 +433,6 @@ function createParticles({object, color, fades}) {
     }
 }
 
-// function animateBackground() {
-//     player.opacity = 1;
-//     game.over = false;
-//     frames = 0;
-
-//     const scoreTab = document.querySelector(".score-tab"); 
-//     scoreTab.classList.toggle("active");
-
-//     removeEventListener("click", animateBackground);
-// }
-
-// addEventListener("click", animateBackground);
-
 function animate() {
     if (!game.active) return
     requestAnimationFrame(animate)
@@ -468,8 +475,11 @@ function animate() {
                 player.position.x && 
                 InvaderProjectile.position.x <= player.position.x +
                 player.width
-                ) {
-
+                ) 
+                {
+                    soundsEffect.explodeSound.play()
+                    soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
+                    soundsEffect.gameOverSound.play()
                     setTimeout(() => {
                         invaderProjectiles.splice(index, 1)
                         player.opacity = 0
@@ -477,11 +487,10 @@ function animate() {
                     }, 0)
 
                     setTimeout(() => {
-                        game.active = false
+                        game.active = false;
                         const scoreTab = document.querySelector(".score-tab");
                         scoreTab.classList.remove("active");
-                        
-                    }, 2000)
+                    }, 3000)
 
                     createParticles({
                         object: player,
@@ -507,6 +516,7 @@ function animate() {
 
         // spawn projectiles
         if (frames % 199 === 0 && grid.invaders.length > 0) {
+           soundsEffect.enemyShootSound.play();
            grid.invaders[Math.floor(Math.random() * grid.invaders.
             length)].shoot(
                 invaderProjectiles
@@ -546,9 +556,9 @@ function animate() {
                               fades: true
                             })
 
-
                             grid.invaders.splice(i, 1)
                             Projectiles.splice(j, 1)
+                            soundsEffect.explodeSound.play()
 
                             if(grid.invaders.length > 0) {
                                 const firstInvader = grid.invaders[0]
@@ -608,7 +618,7 @@ addEventListener("keydown", ({key}) => {
             break; 
         case " ":
             // console.log("space")
-            playerShoot.play()
+            soundsEffect.playerShootSound.play()
             Projectiles.push(
                     new Projectile({
                 position: {
