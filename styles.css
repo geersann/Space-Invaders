@@ -19,9 +19,3 @@ body{
 .active{
     color: white;
 }
-.start-background {
-    position: relative;
-}
-.start-button {
-    position: absolute;
-}

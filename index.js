@@ -9,7 +9,6 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 const soundsEffect = {
-
     playerShootSound: new Audio("./sounds/shoot.wav"),
     explodeSound: new Audio("./sounds/explode.wav"),
     enemyShootSound: new Audio("./sounds/enemyShoot.wav"),
@@ -32,28 +31,28 @@ class StartButton {
         this.position = {
             x: 1130,
             y: 800
-        }
+        };
 
         this.velocity = {
             x: 0,
             y: 0
-        }
+        };
 
-        const image = new Image()
-        image.src = "./img/button.png"
+        const image = new Image();
+        image.src = "./img/button.png";
         image.onload = () => {
-            this.image = image
-            this.width = image.width / 0.4
-            this.height = image.height / 0.4
+            this.image = image;
+            this.width = image.width / 0.4;
+            this.height = image.height / 0.4;
 
             this.addEventListeners();
-        }
+        };
     }
-    
+
     addEventListeners() {
         canvas.addEventListener("click", this.handleCanvasClick.bind(this));
     }
-    // addEventListener for canvas click
+
     handleCanvasClick(event) {
         const mouseX = event.clientX - canvas.getBoundingClientRect().left;
         const mouseY = event.clientY - canvas.getBoundingClientRect().top;
@@ -68,21 +67,17 @@ class StartButton {
             soundsEffect.selectSound.play();
         }
     }
+
     animateBackground() {
         setTimeout(() => {
             soundsEffect.gameStartSound.play();
         }, 300);
-        setTimeout(() => {
-            soundsEffect.backgroundSound.play();
-        }, 1000)
         player.opacity = 1;
         game.over = false;
         frames = 0;
 
         const scoreTab = document.querySelector(".score-tab");
         scoreTab.classList.toggle("active");
-
-        canvas.removeEventListener("click", this.handleCanvasClick.bind(this));
     }
 
     draw() {
@@ -109,7 +104,6 @@ class StartBackground {
             y: 0
         }
 
-        this.opacity = 1
         const image = new Image()
         image.src = "./img/startScreenBackground.png"
         image.onload = () => {
@@ -127,6 +121,78 @@ class StartBackground {
                     this.width,
                     this.height
             )
+    }
+}
+class SoundIcon {
+    constructor() {
+        this.position = {
+            x: 0,
+            y: 50
+        };
+
+        this.velocity = {
+            x: 0,
+            y: 0
+        };
+
+        this.muted = true;
+
+        this.image1 = new Image();
+        this.image1.src = "./img/muteIcon.jpg";
+        this.image1.onload = () => {
+            this.width = this.image1.width / 0.7;
+            this.height = this.image1.height / 0.7;
+        };
+
+        this.image2 = new Image();
+        this.image2.src = "./img/soundIcon.jpg";
+
+        this.currentImage = this.image1;
+
+        canvas.addEventListener("click", this.handleClick.bind(this));
+    }
+
+    handleClick(event) {
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+        // border click check
+        if (
+            mouseX >= this.position.x &&
+            mouseX <= this.position.x + this.width &&
+            mouseY >= this.position.y &&
+            mouseY <= this.position.y + this.height
+        ) {
+            this.muted = !this.muted;
+            this.handleMute();
+            this.toggleImage();
+        }
+    }
+
+    handleMute() {
+        if (this.muted) {
+            soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
+        } else {
+            soundsEffect.backgroundSound.play();
+        }
+    }
+
+    toggleImage() {
+        this.currentImage = (this.currentImage === this.image1) ? this.image2 : this.image1;
+
+        this.width = this.currentImage.width / 0.7;
+        this.height = this.currentImage.height / 0.7;
+    }
+
+    draw() {
+        if (this.currentImage)
+            c.drawImage(
+                this.currentImage,
+                this.position.x,
+                this.position.y,
+                this.width,
+                this.height
+            );
     }
 }
 
@@ -371,13 +437,14 @@ let frames;
 const player = new Player()
 const background = new StartBackground();
 background.draw()
-const button = new StartButton();
-button.draw()
+const startButton = new StartButton();
+startButton.draw()
+const soundButton = new SoundIcon();
+soundButton.draw() 
 const Projectiles = [];
 const grids = [];
 const invaderProjectiles = [];
 const particles = [];
-
 const keys = {
     a: {
         pressed: false
@@ -439,7 +506,8 @@ function animate() {
     c.fillStyle = "black"
     c.fillRect(0, 0, canvas.width, canvas.height)
     background.draw()
-    button.draw()
+    startButton.draw()
+    soundButton.draw() 
     player.update()
     particles.forEach((particle, i) => {
 
@@ -549,7 +617,6 @@ function animate() {
                         // remove invader and projectile
                         if(invaderFound && ProjectileFound) {
                             score += 100
-                            console.log(score)
                             scoreEl.innerHTML = score
                             createParticles({
                               object: invader,
@@ -595,8 +662,7 @@ function animate() {
     if(frames % randomInterval === 0) {
         grids.push(new Grid())
         randomInterval = Math.floor(Math.random() * 500 + 500)
-        frames = 0
-            
+        frames = 0       
     }
 
     frames++
