@@ -19,3 +19,44 @@ body{
 .active{
     color: white;
 }
+.play-button{
+    position: fixed;
+    color: white;
+    font-family: 'Pixelify Sans', sans-serif; 
+    font-size: 52px;
+    bottom: - 100px;
+    top: 817px;
+    left: 1211px;
+}
+.intro{
+    position: fixed;
+    font-size: 135px;
+    font-family: 'Pixelify Sans', sans-serif;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(45deg, deeppink, 
+    blueviolet, indigo, red, darkorange,
+    yellow, lime, mediumaquamarine, aqua, blue,
+    olive);
+    background-size: 400%, 400%;
+    animation: move 10s ease infinite;
+}
+
+@keyframes move {
+    0% {
+       background-position: 0 0; 
+    }
+    25% {
+        background-position: 100% 0; 
+    }
+    50% {
+        background-position: 100% 100%; 
+    }
+    75% {
+        background-position: 0 100%; 
+    }
+    100% {
+        background-position: 0 0; 
+    }
+}
