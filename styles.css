@@ -20,15 +20,16 @@ body{
     color: white;
 }
 .play-button{
+    pointer-events: none;
     position: fixed;
     color: white;
     font-family: 'Pixelify Sans', sans-serif; 
     font-size: 52px;
-    bottom: - 100px;
     top: 817px;
-    left: 1211px;
+    
 }
-.intro{
+.title{
+    pointer-events: none;
     position: fixed;
     font-size: 135px;
     font-family: 'Pixelify Sans', sans-serif;
@@ -41,6 +42,9 @@ body{
     olive);
     background-size: 400%, 400%;
     animation: move 10s ease infinite;
+}
+.hidden {
+    display: none;
 }
 
 @keyframes move {

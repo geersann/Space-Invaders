@@ -38,6 +38,9 @@ class StartButton {
             y: 0
         };
 
+        this.drawActive = true;
+        this.textElement = document.querySelectorAll(".intro");
+
         const image = new Image();
         image.src = "./img/button.png";
         image.onload = () => {
@@ -45,12 +48,13 @@ class StartButton {
             this.width = image.width / 0.4;
             this.height = image.height / 0.4;
 
+            this.handleCanvasClick = this.handleCanvasClick.bind(this); // Збережемо посилання на функцію
             this.addEventListeners();
         };
     }
 
     addEventListeners() {
-        canvas.addEventListener("click", this.handleCanvasClick.bind(this));
+        canvas.addEventListener("click", this.handleCanvasClick);
     }
 
     handleCanvasClick(event) {
@@ -65,6 +69,17 @@ class StartButton {
         ) {
             this.animateBackground();
             soundsEffect.selectSound.play();
+            this.drawActive = false;
+            background.drawActive = false;
+
+            if (this.textElement) {
+                this.textElement.forEach(element => {
+                    element.classList.add("hidden");
+                });
+            }
+
+            // Видаляємо обробник подій після виклику
+            canvas.removeEventListener("click", this.handleCanvasClick);
         }
     }
 
@@ -81,7 +96,7 @@ class StartButton {
     }
 
     draw() {
-        if (this.image)
+        if (this.drawActive && this.image) {
             c.drawImage(
                 this.image,
                 this.position.x,
@@ -89,6 +104,7 @@ class StartButton {
                 this.width,
                 this.height
             );
+        }
     }
 }
 
@@ -97,30 +113,34 @@ class StartBackground {
         this.position = {
             x: 570,
             y: 300
-        }
+        };
 
         this.velocity = {
             x: 0,
             y: 0
-        }
+        };
 
-        const image = new Image()
-        image.src = "./img/startScreenBackground.png"
+        this.drawActive = true;
+
+        const image = new Image();
+        image.src = "./img/startScreenBackground.png";
         image.onload = () => {
-            this.image = image
-            this.width = image.width / 0.5
-            this.height = image.height / 0.5
-        }
+            this.image = image;
+            this.width = image.width / 0.5;
+            this.height = image.height / 0.5;
+        };
     }
+
     draw() {
-            if(this.image)
-                c.drawImage(
-                    this.image,
-                    this.position.x,
-                    this.position.y,
-                    this.width,
-                    this.height
-            )
+        if (this.drawActive && this.image) {
+            c.drawImage(
+                this.image,
+                this.position.x,
+                this.position.y,
+                this.width,
+                this.height
+            );
+        }
     }
 }
 class SoundIcon {
