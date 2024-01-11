@@ -2,8 +2,8 @@ const scoreEl = document.querySelector("#scoreEl");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 
-canvas.width = innerWidth
-canvas.height = innerHeight
+canvas.width = 1500
+canvas.height = 867
 
 const soundsEffect = {
     playerShootSound: new Audio("./sounds/shoot.wav"),
@@ -26,8 +26,8 @@ soundsEffect.backgroundSound.volume = 0.5;
 class StartButton {
     constructor() {
         this.position = {
-            x: 1130,
-            y: 800
+            x: 610,
+            y: 570
         };
 
         this.velocity = {
@@ -42,8 +42,8 @@ class StartButton {
         image.src = "./img/button.png";
         image.onload = () => {
             this.image = image;
-            this.width = image.width / 0.4;
-            this.height = image.height / 0.4;
+            this.width = image.width / 0.5;
+            this.height = image.height / 0.5;
 
             this.handleCanvasClick = this.handleCanvasClick.bind(this); // Збережемо посилання на функцію
             this.addEventListeners();
@@ -84,6 +84,9 @@ class StartButton {
         setTimeout(() => {
             soundsEffect.gameStartSound.play();
         }, 300);
+        setTimeout(() => {
+            soundsEffect.backgroundSound.play();
+        }, 500)
         player.opacity = 1;
         game.over = false;
         frames = 0;
@@ -108,8 +111,8 @@ class StartButton {
 class StartBackground {
     constructor() {
         this.position = {
-            x: 570,
-            y: 300
+            x: 230,
+            y: 200
         };
 
         this.velocity = {
@@ -123,8 +126,8 @@ class StartBackground {
         image.src = "./img/startScreenBackground.png";
         image.onload = () => {
             this.image = image;
-            this.width = image.width / 0.5;
-            this.height = image.height / 0.5;
+            this.width = image.width / 0.7;
+            this.height = image.height / 0.7;
         };
     }
 
@@ -155,14 +158,14 @@ class SoundIcon {
         this.muted = true;
 
         this.image1 = new Image();
-        this.image1.src = "./img/muteIcon.jpg";
+        this.image1.src = "./img/soundIcon.jpg";
         this.image1.onload = () => {
             this.width = this.image1.width / 0.7;
             this.height = this.image1.height / 0.7;
         };
 
         this.image2 = new Image();
-        this.image2.src = "./img/soundIcon.jpg";
+        this.image2.src = "./img/muteIcon.jpg";
 
         this.currentImage = this.image1;
     }
@@ -703,9 +706,9 @@ addEventListener("keydown", ({key}) => {
             case "m":
                 const toggleBackgroundSound = () => {
                     if (isBackgroundSoundMuted) {
-                        soundsEffect.backgroundSound.pause();
-                    } else {
                         soundsEffect.backgroundSound.play();
+                    } else {
+                        soundsEffect.backgroundSound.pause();
                     }
     
                     isBackgroundSoundMuted = !isBackgroundSoundMuted;
