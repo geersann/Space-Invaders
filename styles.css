@@ -8,6 +8,12 @@ body{
 }
 
 .score-tab{
+    display: none;
+}
+.active{
+    pointer-events: none;
+    display: block;
+    color: white;
     position: fixed;
     z-index: 10;
     font-size: 15px;
@@ -15,9 +21,6 @@ body{
     top: 10px;
     margin: 0;
     font-family: 'Pixelify Sans', sans-serif;
-}
-.active{
-    color: white;
 }
 .play-button{
     pointer-events: none;
