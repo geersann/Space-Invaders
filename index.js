@@ -2,9 +2,6 @@ const scoreEl = document.querySelector("#scoreEl");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 
-canvas.width = 1024
-canvas.height = 576
-
 canvas.width = innerWidth
 canvas.height = innerHeight
 
@@ -168,33 +165,6 @@ class SoundIcon {
         this.image2.src = "./img/soundIcon.jpg";
 
         this.currentImage = this.image1;
-
-        canvas.addEventListener("click", this.handleClick.bind(this));
-    }
-
-    handleClick(event) {
-        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-
-        // border click check
-        if (
-            mouseX >= this.position.x &&
-            mouseX <= this.position.x + this.width &&
-            mouseY >= this.position.y &&
-            mouseY <= this.position.y + this.height
-        ) {
-            this.muted = !this.muted;
-            this.handleMute();
-            this.toggleImage();
-        }
-    }
-
-    handleMute() {
-        if (this.muted) {
-            soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
-        } else {
-            soundsEffect.backgroundSound.play();
-        }
     }
 
     toggleImage() {
@@ -453,14 +423,15 @@ class Grid {
     }
 }
 
+let isBackgroundSoundMuted = false;
 let frames;
 const player = new Player()
 const background = new StartBackground();
 background.draw()
 const startButton = new StartButton();
+const soundIcon = new SoundIcon();
+soundIcon.draw()
 startButton.draw()
-const soundButton = new SoundIcon();
-soundButton.draw() 
 const Projectiles = [];
 const grids = [];
 const invaderProjectiles = [];
@@ -520,6 +491,16 @@ function createParticles({object, color, fades}) {
     }
 }
 
+function toggleBackgroundSound() {
+    if (isBackgroundSoundMuted) {
+        soundsEffect.backgroundSound.play();
+    } else {
+        soundsEffect.backgroundSound.pause();
+    }
+
+    isBackgroundSoundMuted = !isBackgroundSoundMuted;
+}
+
 function animate() {
     if (!game.active) return
     requestAnimationFrame(animate)
@@ -527,7 +508,7 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height)
     background.draw()
     startButton.draw()
-    soundButton.draw() 
+    soundIcon.draw()
     player.update()
     particles.forEach((particle, i) => {
 
@@ -718,8 +699,22 @@ addEventListener("keydown", ({key}) => {
                 })
             )
             // console.log(Projectiles)
-            break; 
-    }
+            break;
+            case "m":
+                const toggleBackgroundSound = () => {
+                    if (isBackgroundSoundMuted) {
+                        soundsEffect.backgroundSound.pause();
+                    } else {
+                        soundsEffect.backgroundSound.play();
+                    }
+    
+                    isBackgroundSoundMuted = !isBackgroundSoundMuted;
+                };
+    
+                toggleBackgroundSound();
+                soundIcon.toggleImage();
+                break;
+        }
 })
 
 addEventListener("keyup", ({key}) => {
