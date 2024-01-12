@@ -70,14 +70,14 @@ body{
     box-shadow: 7px 14px 12px 3px #1a7cb5;
     filter: drop-shadow(2px 4px 6px #1a7cb5);
     border: 6px solid black;
-    left: 800px;
+    left: 770px;
     bottom: 96px;
 }
 .key-m-desribe {
     font-size: 40px;
     font-family: 'Pixelify Sans', sans-serif;
     position: absolute;
-    left: 910px;
+    left: 880px;
     bottom: 104px;
     font-weight: bold;
 }
@@ -92,7 +92,7 @@ body{
     box-shadow: 7px 14px 12px 3px #1a7cb5;
     filter: drop-shadow(2px 4px 6px #1a7cb5);
     border: 6px solid black;
-    left: 1130px;
+    left: 1110px;
     bottom: 96px;
 }
 .key-right {
@@ -106,14 +106,14 @@ body{
     box-shadow: 7px 14px 12px 3px #1a7cb5;
     filter: drop-shadow(2px 4px 6px #1a7cb5);
     border: 6px solid black;
-    left: 1200px;
+    left: 1170px;
     bottom: 96px;
 }
 .keys-lefrig-desribe {
     font-size: 40px;
     font-family: 'Pixelify Sans', sans-serif;
     position: absolute;
-    left: 1300px;
+    left: 1270px;
     bottom: 104px;
     font-weight: bold;
 }
@@ -128,14 +128,14 @@ body{
     box-shadow: 7px 14px 12px 3px #1a7cb5;
     filter: drop-shadow(2px 4px 6px #1a7cb5);
     border: 6px solid black;
-    left: 1500px;
+    left: 1470px;
     bottom: 96px;
 }
 .key-space-desribe {
     font-size: 40px;
     font-family: 'Pixelify Sans', sans-serif;
     position: absolute;
-    left: 1770px;
+    left: 1740px;
     bottom: 104px;
     font-weight: bold;
 }
