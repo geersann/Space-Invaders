@@ -5,6 +5,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(73 4 151);
 }
 
 .score-tab{
@@ -51,6 +52,95 @@ body{
 }
 .hidden {
     display: none;
+}
+.canvas {
+    box-shadow: 13px 24px 12px 12px rgba(28, 0, 0, 0.2);
+}
+.instruction {
+    pointer-events: none;
+}
+.key-m {
+    display: block;
+    position: absolute;
+    border: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    max-width: 50px;
+    box-shadow: 7px 14px 12px 3px #1a7cb5;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    border: 6px solid black;
+    left: 800px;
+    bottom: 96px;
+}
+.key-m-desribe {
+    font-size: 40px;
+    font-family: 'Pixelify Sans', sans-serif;
+    position: absolute;
+    left: 910px;
+    bottom: 104px;
+    font-weight: bold;
+}
+.key-left {
+    display: block;
+    position: absolute;
+    border: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    max-width: 50px;
+    box-shadow: 7px 14px 12px 3px #1a7cb5;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    border: 6px solid black;
+    left: 1130px;
+    bottom: 96px;
+}
+.key-right {
+    display: block;
+    position: absolute;
+    border: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    max-width: 50px;
+    box-shadow: 7px 14px 12px 3px #1a7cb5;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    border: 6px solid black;
+    left: 1200px;
+    bottom: 96px;
+}
+.keys-lefrig-desribe {
+    font-size: 40px;
+    font-family: 'Pixelify Sans', sans-serif;
+    position: absolute;
+    left: 1300px;
+    bottom: 104px;
+    font-weight: bold;
+}
+.key-space {
+    display: block;
+    position: absolute;
+    border: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    max-width: 210px;
+    box-shadow: 7px 14px 12px 3px #1a7cb5;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    border: 6px solid black;
+    left: 1500px;
+    bottom: 96px;
+}
+.key-space-desribe {
+    font-size: 40px;
+    font-family: 'Pixelify Sans', sans-serif;
+    position: absolute;
+    left: 1770px;
+    bottom: 104px;
+    font-weight: bold;
+}
+.stand {
+    visibility: hidden;
 }
 
 @keyframes move {
