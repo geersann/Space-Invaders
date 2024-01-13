@@ -477,7 +477,6 @@ const loadScore = () => {
     textElement.appendChild(newRow);
 
     score = 0;
-    saveScore();
 }
 
 loadScore();
