@@ -55,6 +55,8 @@ body{
 }
 .canvas {
     box-shadow: 13px 24px 12px 12px rgba(28, 0, 0, 0.2);
+    
+    
 }
 .instruction {
     pointer-events: none;
@@ -142,6 +144,39 @@ body{
 .stand {
     visibility: hidden;
 }
+th, td {
+    border: 1px solid black;
+    text-align: left;
+    padding-right: 50px;
+    padding-left: 0px;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+}
+.score-title{
+    color: black;
+    font-size: 55px;
+    font-family: 'Pixelify Sans', sans-serif;
+    position: relative;
+    right: -95px;
+    bottom: -50px;
+    filter: drop-shadow(2px 4px 6px #1a7cb5);
+}
+.score-table{
+    margin-top: 20px;
+    left: -250px;
+    top: -350px;
+    font-size: 32px;
+    font-family: 'Pixelify Sans', sans-serif;
+    
+}
+.score-page{
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+    position: relative;
+    left: -217px;
+    top: -269px;
+}
+
 
 @keyframes move {
     0% {

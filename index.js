@@ -457,7 +457,30 @@ let game = {
     over: true,
     active: true,
 }
-let score = 0
+let score = 0;
+
+const saveScore = () => {
+    window.localStorage.setItem("score", score);
+}
+
+const loadScore = () => {
+    score = parseInt(window.localStorage.getItem("score"), 10) || 0;
+
+    const textElement = document.getElementById("scoreSlide");
+
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td>1</td>
+        <td>Player</td>
+        <td>${score}</td>
+    `;
+    textElement.appendChild(newRow);
+
+    score = 0;
+    saveScore();
+}
+
+loadScore();
 
 for (let i = 0; i < 100; i++) {
     particles.push(new Particle({
@@ -562,6 +585,7 @@ function animate() {
                         game.active = false;
                         const scoreTab = document.querySelector(".score-tab");
                         scoreTab.classList.remove("active");
+                        saveScore();
                     }, 3000)
 
                     createParticles({
