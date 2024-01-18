@@ -50,6 +50,48 @@ body{
     background-size: 400%, 400%;
     animation: move 10s ease infinite;
 }
+.over-title{
+    display: none;
+}
+.over-title .active{
+    pointer-events: none;
+    position: absolute;
+    font-size: 92px;
+    right: 432px;
+    bottom: 320px;
+    font-family: 'Pixelify Sans', sans-serif;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(45deg, deeppink, 
+    blueviolet, indigo, red, darkorange,
+    yellow, lime, mediumaquamarine, aqua, blue,
+    olive);
+    background-size: 400%, 400%;
+    animation: move 10s ease infinite;
+}
+.over-score{
+    display: none;
+}
+.over-score.active{
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 45px;
+    top: 482px;
+    left: 574px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(45deg, deeppink, 
+    blueviolet, indigo, red, darkorange,
+    yellow, lime, mediumaquamarine, aqua, blue,
+    olive);
+    background-size: 400%, 400%;
+    animation: move 10s ease infinite;
+}
 .hidden {
     display: none;
 }

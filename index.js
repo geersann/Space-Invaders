@@ -1,6 +1,8 @@
 const scoreEl = document.querySelector("#scoreEl");
+const overscoreEl = document.querySelector("#overscoreEl")
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
+let score = 0;
 
 canvas.width = 1500
 canvas.height = 867
@@ -46,6 +48,7 @@ class StartButton {
             this.height = image.height / 0.5;
 
             this.handleCanvasClick = this.handleCanvasClick.bind(this);
+            this.handleGameOverClick = this.handleGameOverClick.bind(this); // Додано зв'язок
             this.addEventListeners();
         };
     }
@@ -75,19 +78,24 @@ class StartButton {
                 });
             }
 
-            
             canvas.removeEventListener("click", this.handleCanvasClick);
-
-        
             canvas.addEventListener("click", this.handleGameOverClick);
         }
     }
 
     handleGameOverClick(event) {
-        location.reload();
-        canvas.removeEventListener("click", this.handleGameOverClick);
-    }
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
+        if (
+            mouseX >= this.position.x &&
+            mouseX <= this.position.x + this.width &&
+            mouseY >= this.position.y &&
+            mouseY <= this.position.y + this.height
+        ) {
+            location.reload();
+        }
+    }
 
     animateBackground() {
         setTimeout(() => {
@@ -473,7 +481,6 @@ let game = {
     over: true,
     active: true,
 }
-let score = 0;
 
 const saveScore = () => {
     window.localStorage.setItem("score", score);
@@ -597,7 +604,8 @@ function animate() {
 
                     setTimeout(() => {
                         const scoreTab = document.querySelector(".score-tab");
-                        scoreTab.classList.remove("active");
+                        const overScore = document.querySelector(".over-score");
+                        overScore.classList.toggle("active");
                         grids.forEach((grid) => {
                             grid.isActive = false;
                         });
@@ -605,7 +613,6 @@ function animate() {
                         startButton.drawActive = true;
                         canvas.addEventListener("click", startButton.handleGameOverClick);
                         saveScore();
-                        loadScore();
                     }, 3000);
 
                     createParticles({
@@ -666,6 +673,7 @@ function animate() {
                         if(invaderFound && ProjectileFound) {
                             score += 100
                             scoreEl.innerHTML = score
+                            overscoreEl.innerHTML = score
                             createParticles({
                               object: invader,
                               fades: true
