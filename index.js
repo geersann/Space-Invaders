@@ -45,7 +45,7 @@ class StartButton {
             this.width = image.width / 0.5;
             this.height = image.height / 0.5;
 
-            this.handleCanvasClick = this.handleCanvasClick.bind(this); // Збережемо посилання на функцію
+            this.handleCanvasClick = this.handleCanvasClick.bind(this);
             this.addEventListeners();
         };
     }
@@ -75,10 +75,19 @@ class StartButton {
                 });
             }
 
-            // Видаляємо обробник подій після виклику
+            
             canvas.removeEventListener("click", this.handleCanvasClick);
+
+        
+            canvas.addEventListener("click", this.handleGameOverClick);
         }
     }
+
+    handleGameOverClick(event) {
+        location.reload();
+        canvas.removeEventListener("click", this.handleGameOverClick);
+    }
+
 
     animateBackground() {
         setTimeout(() => {
@@ -90,6 +99,7 @@ class StartButton {
         player.opacity = 1;
         game.over = false;
         frames = 0;
+        score = 0;
 
         const scoreTab = document.querySelector(".score-tab");
         scoreTab.classList.toggle("active");
@@ -481,8 +491,6 @@ const loadScore = () => {
         <td>${score}</td>
     `;
     textElement.appendChild(newRow);
-
-    score = 0;
 }
 loadScore();
 
@@ -594,6 +602,8 @@ function animate() {
                             grid.isActive = false;
                         });
                         background.drawActive = true;
+                        startButton.drawActive = true;
+                        canvas.addEventListener("click", startButton.handleGameOverClick);
                         saveScore();
                         loadScore();
                     }, 3000);
