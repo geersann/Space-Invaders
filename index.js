@@ -1,5 +1,9 @@
 const scoreEl = document.querySelector("#scoreEl");
 const overscoreEl = document.querySelector("#overscoreEl")
+const scoreTab = document.querySelector(".score-tab");
+const overScore = document.querySelector(".over-score");
+const overTitle = document.querySelector(".over-title");
+const menuButton = document.querySelector(".menu-button");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 let score = 0;
@@ -603,9 +607,10 @@ function animate() {
                     }, 0)
 
                     setTimeout(() => {
-                        const scoreTab = document.querySelector(".score-tab");
-                        const overScore = document.querySelector(".over-score");
+                        menuButton.classList.toggle("active");
+                        overTitle.classList.toggle("active");
                         overScore.classList.toggle("active");
+                        scoreTab.classList.remove("active");
                         grids.forEach((grid) => {
                             grid.isActive = false;
                         });
