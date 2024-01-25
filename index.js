@@ -1,14 +1,15 @@
-// import { saveScore, loadScore, createParticles, toggleBackgroundSound, animate} from './modules/funcModule.js';
+// import {helper} from './modules/funcModule.js';
+import { animate, createParticles, toggleBackgroundSound} from './animateModule.js';
 
-const scoreEl = document.querySelector("#scoreEl");
-const overscoreEl = document.querySelector("#overscoreEl")
-const scoreTab = document.querySelector(".score-tab");
-const overScore = document.querySelector(".over-score");
-const overTitle = document.querySelector(".over-title");
-const menuButton = document.querySelector(".menu-button");
-const canvas = document.querySelector("canvas");
-const c = canvas.getContext("2d")
-let score = 0;
+export const scoreEl = document.querySelector("#scoreEl");
+export const overscoreEl = document.querySelector("#overscoreEl")
+export const scoreTab = document.querySelector(".score-tab");
+export const overScore = document.querySelector(".over-score");
+export const overTitle = document.querySelector(".over-title");
+export const menuButton = document.querySelector(".menu-button");
+export const canvas = document.querySelector("canvas");
+export const c = canvas.getContext("2d")
+export let score = 0;
 
 canvas.width = 1500
 canvas.height = 867
@@ -54,7 +55,7 @@ class StartButton {
             this.height = image.height / 0.5;
 
             this.handleCanvasClick = this.handleCanvasClick.bind(this);
-            this.handleGameOverClick = this.handleGameOverClick.bind(this); // Додано зв'язок
+            this.handleGameOverClick = this.handleGameOverClick.bind(this);
             this.addEventListeners();
         };
     }
@@ -347,7 +348,7 @@ class InvaderProjectile {
     }
 }
 
-class Invader {
+export class Invader {
     constructor({position}) {
         this.velocity = {
             x: 0,
@@ -403,9 +404,9 @@ class Invader {
     }
 }
 
-class Grid {
+export class Grid {
     constructor() {
-        this.isActive = true; // Додаємо нове властивість isActive
+        this.isActive = true;
 
         this.position = {
             x: 0,
@@ -440,7 +441,7 @@ class Grid {
 
     update() {
         if (!this.isActive) {
-            return; // Якщо неактивний, не виконуємо оновлення
+            return;
         }
 
         this.position.x += this.velocity.x;
@@ -455,21 +456,22 @@ class Grid {
     }
 }
 
-let isBackgroundSoundMuted = false;
-let frames;
-const isActive = (obj) => obj.isActive;
-const player = new Player()
-const background = new StartBackground();
+export let isBackgroundSoundMuted = false;
+export let frames;
+export const isActive = (obj) => obj.isActive;
+export const player = new Player()
+export const grid = new Grid();
+export const background = new StartBackground();
 background.draw()
-const startButton = new StartButton();
-const soundIcon = new SoundIcon();
+export const startButton = new StartButton();
+export const soundIcon = new SoundIcon();
 soundIcon.draw()
 startButton.draw()
-const Projectiles = [];
-const grids = [];
-const invaderProjectiles = [];
-const particles = [];
-const keys = {
+export const Projectiles = [];
+export const grids = [];
+export const invaderProjectiles = [];
+export const particles = [];
+export const keys = {
     a: {
         pressed: false
     },
@@ -482,8 +484,8 @@ const keys = {
 }
 
 
-let randomInterval = Math.floor(Math.random() * 500 + 500);
-let game = {
+export let randomInterval = Math.floor(Math.random() * 500 + 500);
+export let game = {
     over: true,
     active: true,
 }
@@ -523,215 +525,215 @@ for (let i = 0; i < 100; i++) {
   )
 }
 
-function createParticles({object, color, fades}) {
-    for (let i = 0; i < 15; i++) {
-        particles.push(new Particle({
-            position: {
-                x: object.position.x + object.width / 2,
-                y: object.position.y + object.height / 2
-            },
-            velocity: {
-                x: (Math.random() - 0.5) * 2,
-                y: (Math.random() - 0.5) * 2
-            },
-            radius: Math.random() * 3,
-            color: color || "#BAA0DE",
-            fades
-        })
-      )
-    }
-}
+// function createParticles({object, color, fades}) {
+//     for (let i = 0; i < 15; i++) {
+//         particles.push(new Particle({
+//             position: {
+//                 x: object.position.x + object.width / 2,
+//                 y: object.position.y + object.height / 2
+//             },
+//             velocity: {
+//                 x: (Math.random() - 0.5) * 2,
+//                 y: (Math.random() - 0.5) * 2
+//             },
+//             radius: Math.random() * 3,
+//             color: color || "#BAA0DE",
+//             fades
+//         })
+//       )
+//     }
+// }
 
-function toggleBackgroundSound() {
-    if (isBackgroundSoundMuted) {
-        soundsEffect.backgroundSound.play();
-    } else {
-        soundsEffect.backgroundSound.pause();
-    }
+// function toggleBackgroundSound() {
+//     if (isBackgroundSoundMuted) {
+//         soundsEffect.backgroundSound.play();
+//     } else {
+//         soundsEffect.backgroundSound.pause();
+//     }
 
-    isBackgroundSoundMuted = !isBackgroundSoundMuted;
-}
+//     isBackgroundSoundMuted = !isBackgroundSoundMuted;
+// }
 
-function animate() {
-    if (!game.active) return
-    requestAnimationFrame(animate)
-    c.fillStyle = "black"
-    let spawnActive = true;
-    c.fillRect(0, 0, canvas.width, canvas.height)
-    background.draw()
-    startButton.draw()
-    soundIcon.draw()
-    player.update()
-    particles.forEach((particle, i) => {
+// function animate() {
+//     if (!game.active) return
+//     requestAnimationFrame(animate)
+//     c.fillStyle = "black"
+//     let spawnActive = true;
+//     c.fillRect(0, 0, canvas.width, canvas.height)
+//     background.draw()
+//     startButton.draw()
+//     soundIcon.draw()
+//     player.update()
+//     particles.forEach((particle, i) => {
 
-        if(particle.position.y - particle.radius >= canvas.
-            height) {
-                particle.position.x = Math.random() * canvas.width
-                particle.position.y = -particle.radius
-            }
+//         if(particle.position.y - particle.radius >= canvas.
+//             height) {
+//                 particle.position.x = Math.random() * canvas.width
+//                 particle.position.y = -particle.radius
+//             }
 
-        if(particle.opacity <= 0) {
-            setTimeout(() => {
-                particles.splice(i, 1)
-            }, 0)
-        } else {
-            particle.update();
-        }
-    })
+//         if(particle.opacity <= 0) {
+//             setTimeout(() => {
+//                 particles.splice(i, 1)
+//             }, 0)
+//         } else {
+//             particle.update();
+//         }
+//     })
     
-    invaderProjectiles.forEach((InvaderProjectile, index) => {
-        if(InvaderProjectile.position.y + InvaderProjectile.
-            height >= canvas.height) {
-                setTimeout(() => {
-                    invaderProjectiles.splice(index, 1)
-                }, 0)   
-            } else InvaderProjectile.update()
+//     invaderProjectiles.forEach((InvaderProjectile, index) => {
+//         if(InvaderProjectile.position.y + InvaderProjectile.
+//             height >= canvas.height) {
+//                 setTimeout(() => {
+//                     invaderProjectiles.splice(index, 1)
+//                 }, 0)   
+//             } else InvaderProjectile.update()
 
-            // projectile hits player
-            if (InvaderProjectile.position.y + InvaderProjectile.height 
-                    >= 
-                player.position.y && InvaderProjectile.position.x +
-                InvaderProjectile.width 
-                    >= 
-                player.position.x && 
-                InvaderProjectile.position.x <= player.position.x +
-                player.width
-                ) 
-                {
-                    soundsEffect.explodeSound.play()
-                    soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
-                    soundsEffect.enemyShootSound.muted = !soundsEffect.enemyShootSound.muted;
-                    soundsEffect.gameOverSound.play()
-                    setTimeout(() => {
-                        invaderProjectiles.splice(index, 1)
-                        player.opacity = 0
-                        game.over = true
-                    }, 0)
+//             // projectile hits player
+//             if (InvaderProjectile.position.y + InvaderProjectile.height 
+//                     >= 
+//                 player.position.y && InvaderProjectile.position.x +
+//                 InvaderProjectile.width 
+//                     >= 
+//                 player.position.x && 
+//                 InvaderProjectile.position.x <= player.position.x +
+//                 player.width
+//                 ) 
+//                 {
+//                     soundsEffect.explodeSound.play()
+//                     soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
+//                     soundsEffect.enemyShootSound.muted = !soundsEffect.enemyShootSound.muted;
+//                     soundsEffect.gameOverSound.play()
+//                     setTimeout(() => {
+//                         invaderProjectiles.splice(index, 1)
+//                         player.opacity = 0
+//                         game.over = true
+//                     }, 0)
 
-                    setTimeout(() => {
-                        menuButton.classList.toggle("active");
-                        overTitle.classList.toggle("active");
-                        overScore.classList.toggle("active");
-                        scoreTab.classList.remove("active");
-                        grids.forEach((grid) => {
-                            grid.isActive = false;
-                        });
-                        background.drawActive = true;
-                        startButton.drawActive = true;
-                        canvas.addEventListener("click", startButton.handleGameOverClick);
-                        saveScore();
-                    }, 3000);
+//                     setTimeout(() => {
+//                         menuButton.classList.toggle("active");
+//                         overTitle.classList.toggle("active");
+//                         overScore.classList.toggle("active");
+//                         scoreTab.classList.remove("active");
+//                         grids.forEach((grid) => {
+//                             grid.isActive = false;
+//                         });
+//                         background.drawActive = true;
+//                         startButton.drawActive = true;
+//                         canvas.addEventListener("click", startButton.handleGameOverClick);
+//                         saveScore();
+//                     }, 3000);
 
-                    createParticles({
-                        object: player,
-                        color: "white",
-                        fades: true
-                      }) 
-                }
-    })
+//                     createParticles({
+//                         object: player,
+//                         color: "white",
+//                         fades: true
+//                       }) 
+//                 }
+//     })
 
-    Projectiles.forEach((Projectile, index) => {
+//     Projectiles.forEach((Projectile, index) => {
 
-        if(Projectile.position.y + Projectile.radius <= 0){
-            setTimeout(() => {
-                Projectiles.splice(index, 1)
-            }, 0)
-        }else{
-        Projectile.update()
-        }
-    })
+//         if(Projectile.position.y + Projectile.radius <= 0){
+//             setTimeout(() => {
+//                 Projectiles.splice(index, 1)
+//             }, 0)
+//         }else{
+//         Projectile.update()
+//         }
+//     })
 
-    grids.forEach((grid, gridIndex) => {
-        grid.update()
+//     grids.forEach((grid, gridIndex) => {
+//         grid.update()
 
-        // spawn projectiles
-        if (frames % 199 === 0 && grid.invaders.length > 0) {
-           soundsEffect.enemyShootSound.play();
-           grid.invaders[Math.floor(Math.random() * grid.invaders.
-            length)].shoot(
-                invaderProjectiles
-                )
-        }
+//         // spawn projectiles
+//         if (frames % 199 === 0 && grid.invaders.length > 0) {
+//            soundsEffect.enemyShootSound.play();
+//            grid.invaders[Math.floor(Math.random() * grid.invaders.
+//             length)].shoot(
+//                 invaderProjectiles
+//                 )
+//         }
 
-          // projectiles hit enemy
-          grid.invaders.forEach((invader, i) => {
-            invader.update({velocity: grid.velocity})
+//           // projectiles hit enemy
+//           grid.invaders.forEach((invader, i) => {
+//             invader.update({velocity: grid.velocity})
             
-            Projectiles.forEach((Projectile, j)=> {
-               if (
-                Projectile.position.y - Projectile.radius <= 
-                    invader.position.y + invader.height &&
-                Projectile.position.x + Projectile.radius >=
-                    invader.position.x && 
-                Projectile.position.x - Projectile.radius <= 
-                    invader.position.x + invader.width && 
-                Projectile.position.y + Projectile.radius >=
-                    invader.position.y
-                ) {
+//             Projectiles.forEach((Projectile, j)=> {
+//                if (
+//                 Projectile.position.y - Projectile.radius <= 
+//                     invader.position.y + invader.height &&
+//                 Projectile.position.x + Projectile.radius >=
+//                     invader.position.x && 
+//                 Projectile.position.x - Projectile.radius <= 
+//                     invader.position.x + invader.width && 
+//                 Projectile.position.y + Projectile.radius >=
+//                     invader.position.y
+//                 ) {
 
-                    setTimeout(() => {
-                        const invaderFound = grid.invaders.find(
-                            (invader2) => invader2 === invader
-                        )
-                        const ProjectileFound = Projectiles.find(
-                            Projectile2 => Projectile2 === Projectile)
+//                     setTimeout(() => {
+//                         const invaderFound = grid.invaders.find(
+//                             (invader2) => invader2 === invader
+//                         )
+//                         const ProjectileFound = Projectiles.find(
+//                             Projectile2 => Projectile2 === Projectile)
 
-                        // remove invader and projectile
-                        if(invaderFound && ProjectileFound) {
-                            score += 100
-                            scoreEl.innerHTML = score
-                            overscoreEl.innerHTML = score
-                            createParticles({
-                              object: invader,
-                              fades: true
-                            })
+//                         // remove invader and projectile
+//                         if(invaderFound && ProjectileFound) {
+//                             score += 100
+//                             scoreEl.innerHTML = score
+//                             overscoreEl.innerHTML = score
+//                             createParticles({
+//                               object: invader,
+//                               fades: true
+//                             })
 
-                            grid.invaders.splice(i, 1)
-                            Projectiles.splice(j, 1)
-                            soundsEffect.explodeSound.play()
+//                             grid.invaders.splice(i, 1)
+//                             Projectiles.splice(j, 1)
+//                             soundsEffect.explodeSound.play()
 
-                            if(grid.invaders.length > 0) {
-                                const firstInvader = grid.invaders[0]
-                                const lastInvader = grid.invaders[grid.
-                                invaders.length - 1]
+//                             if(grid.invaders.length > 0) {
+//                                 const firstInvader = grid.invaders[0]
+//                                 const lastInvader = grid.invaders[grid.
+//                                 invaders.length - 1]
 
-                                grid.width = lastInvader.position.x -
-                                firstInvader.position.x + 
-                                lastInvader.width
-                                grid.position.x = firstInvader.position.x
-                            }else {
-                                grids.splice(gridIndex, 1)  
-                            }
-                        }
-                    }, 0);
-                }
-            })
-        })
-    })
+//                                 grid.width = lastInvader.position.x -
+//                                 firstInvader.position.x + 
+//                                 lastInvader.width
+//                                 grid.position.x = firstInvader.position.x
+//                             }else {
+//                                 grids.splice(gridIndex, 1)  
+//                             }
+//                         }
+//                     }, 0);
+//                 }
+//             })
+//         })
+//     })
 
-    if (keys.a.pressed && player.position.x >= 0) {
-        player.velocity.x = -7
-        player.rotation = -0.15
-    } else if (keys.d.pressed && player.position.x + player.
-        width <= canvas.width) {   
-        player.velocity.x = 7
-        player.rotation = 0.15 
-    }else{
-        player.velocity.x = 0
-        player.rotation = 0
-    }
+//     if (keys.a.pressed && player.position.x >= 0) {
+//         player.velocity.x = -7
+//         player.rotation = -0.15
+//     } else if (keys.d.pressed && player.position.x + player.
+//         width <= canvas.width) {   
+//         player.velocity.x = 7
+//         player.rotation = 0.15 
+//     }else{
+//         player.velocity.x = 0
+//         player.rotation = 0
+//     }
     
-    //spawning enemies
-    if (!grids.every(isActive)) {
-        spawnActive = false;
-    } else if (spawnActive && frames % randomInterval === 0) {
-        grids.push(new Grid());
-        randomInterval = Math.floor(Math.random() * 500 + 500);
-        frames = 0;
-    }
+//     //spawning enemies
+//     if (!grids.every(isActive)) {
+//         spawnActive = false;
+//     } else if (spawnActive && frames % randomInterval === 0) {
+//         grids.push(new Grid());
+//         randomInterval = Math.floor(Math.random() * 500 + 500);
+//         frames = 0;
+//     }
 
-    frames++;
-}
+//     frames++;
+// }
 animate();
 
 addEventListener("keydown", ({key}) => {

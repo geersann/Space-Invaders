@@ -1,33 +1,13 @@
-import { frames, game, canvas, c, 
+import { game, canvas, c, 
     background, startButton, soundIcon, 
     player, particles, invaderProjectiles, 
-    Projectiles, grids, keys, 
+    Projectiles, grids, keys, frames,
     randomInterval, score, scoreEl, overscoreEl, 
     menuButton, overTitle, overScore, isActive,
     } from './index.js';
 
-const helpers = {
-
-    saveScore : (score) => {
-        window.localStorage.setItem("score", score);
-        return score;
-    },
-    
-    loadScore : () => {
-        score = parseInt(window.localStorage.getItem("score"), 10) || 0;
-    
-        const textElement = document.getElementById("scoreSlide");
-    
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
-            <td>1</td>
-            <td>Player</td>
-            <td>${score}</td>
-        `;
-        textElement.appendChild(newRow);
-    },
-    
-    createParticles : function({object, color, fades}) {
+const helper = {
+    createParticles: function({object, color, fades}) {
         for (let i = 0; i < 15; i++) {
             particles.push(new Particle({
                 position: {
@@ -46,7 +26,7 @@ const helpers = {
         }
     },
     
-    toggleBackgroundSound : function() {
+    toggleBackgroundSound: function() {
         if (isBackgroundSoundMuted) {
             soundsEffect.backgroundSound.play();
         } else {
@@ -55,8 +35,7 @@ const helpers = {
     
         isBackgroundSoundMuted = !isBackgroundSoundMuted;
     },
-    
-    animate : function(game, c, canvas, player) {
+    animate : function() {
         if (!game.active) return
         requestAnimationFrame(animate)
         c.fillStyle = "black"
@@ -238,8 +217,4 @@ const helpers = {
     }
 }
 
-export const saveScore = helpers.saveScore;
-export const loadScore = helpers.loadScore;
-export const createParticles = helpers.createParticles;
-export const toggleBackgroundSound = helpers.toggleBackgroundSound;
-export const animate = helpers.animate;
+export const { animate, createParticles, toggleBackgroundSound } = helper;
