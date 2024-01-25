@@ -1,3 +1,5 @@
+// import { saveScore, loadScore, createParticles, toggleBackgroundSound, animate} from './modules/funcModule.js';
+
 const scoreEl = document.querySelector("#scoreEl");
 const overscoreEl = document.querySelector("#overscoreEl")
 const scoreTab = document.querySelector(".score-tab");
