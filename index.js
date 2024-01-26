@@ -21,10 +21,7 @@ export const isActive = (obj) => obj.isActive;
 export const player = new Player()
 export const grid = new Grid();
 export const background = new StartBackground();
-background.draw()
 export const soundIcon = new SoundIcon();
-soundIcon.draw()
-startButton.draw()
 export const Projectiles = [];
 export const grids = [];
 export const invaderProjectiles = [];
@@ -63,6 +60,9 @@ soundsEffect.gameStartSound.volume = 0.1;
 soundsEffect.selectSound.volume = 0.1;
 soundsEffect.backgroundSound.volume = 0.5;
 
+background.draw()
+soundIcon.draw()
+startButton.draw()
 starsLoop();
 loadScore();
 animate();
