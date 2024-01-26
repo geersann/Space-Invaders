@@ -63,6 +63,7 @@ export class SoundIcon {
         this.currentImage = this.image1;
     }
 
+    //changing the img when pressing the "m" key
     toggleImage() {
         this.currentImage = (this.currentImage === this.image1) ? this.image2 : this.image1;
 
@@ -160,6 +161,7 @@ export class Projectile {
     }
 };
 
+//particle when invaders expolode
 export class Particle {
     constructor({position, velocity, radius, color, fades}){
         this.position = position

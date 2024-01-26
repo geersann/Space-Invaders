@@ -69,6 +69,7 @@ export class StartButton {
         }
     }
 
+    //reassignment button after game.over
     handleGameOverClick(event) {
         const mouseX = event.clientX - canvas.getBoundingClientRect().left;
         const mouseY = event.clientY - canvas.getBoundingClientRect().top;
@@ -81,6 +82,7 @@ export class StartButton {
         ) {
             location.reload();
         }
+        canvas.removeEventListener("click", this.handleGameOverClick);
     }
 
     animateBackground() {
@@ -130,6 +132,26 @@ export const loadScore = () => {
     textElement.appendChild(newRow);
 }
 
+// backgroundloop
+export const starsLoop = () => {
+    for (let i = 0; i < 100; i++) {
+        particles.push(new Particle({
+            position: {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height
+            },
+            velocity: {
+                x: 0,
+                y: 0.7
+            },
+            radius: Math.random() * 2,
+            color: "white"
+        })
+      )
+    }
+}
+
+//create background stars
 export function createParticles({object, color, fades}) {
     for (let i = 0; i < 15; i++) {
         particles.push(new Particle({

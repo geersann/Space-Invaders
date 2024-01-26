@@ -1,9 +1,9 @@
 import { handleKeyDown, handleKeyUp, isBackgroundSoundMuted } from "./modules/eventsModule.js";
 import { StartBackground, SoundIcon, Player, 
-    Projectile, Particle, InvaderProjectile,
-    Invader, Grid} from "./modules/classesModule.js";
+        Projectile, Particle, InvaderProjectile,
+        Invader, Grid} from "./modules/classesModule.js";
 import { frames, score, StartButton, animate, randomInterval,
-    saveScore, loadScore, createParticles} from "./modules/animationModule.js";
+        saveScore, loadScore, createParticles, starsLoop} from "./modules/animationModule.js";
 
 export const scoreEl = document.querySelector("#scoreEl");
 export const overscoreEl = document.querySelector("#overscoreEl")
@@ -40,7 +40,6 @@ export const keys = {
         pressed: false
     },
 }
-
 export let game = {
     over: true,
     active: true,
@@ -64,22 +63,7 @@ soundsEffect.gameStartSound.volume = 0.1;
 soundsEffect.selectSound.volume = 0.1;
 soundsEffect.backgroundSound.volume = 0.5;
 
-for (let i = 0; i < 100; i++) {
-    particles.push(new Particle({
-        position: {
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height
-        },
-        velocity: {
-            x: 0,
-            y: 0.7
-        },
-        radius: Math.random() * 2,
-        color: "white"
-    })
-  )
-}
-
+starsLoop();
 loadScore();
 animate();
 
