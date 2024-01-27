@@ -10,6 +10,7 @@ import { Grid, Particle} from "./classesModule.js";
 export let frames;
 export let score = 0;
 export let randomInterval = Math.floor(Math.random() * 500 + 500);
+let continueShooting = true;
 
 export class StartButton {
     constructor() {
@@ -225,6 +226,7 @@ export function animate() {
                         invaderProjectiles.splice(index, 1)
                         player.opacity = 0
                         game.over = true
+                        continueShooting = false;
                     }, 0)
 
                     setTimeout(() => {
@@ -264,12 +266,9 @@ export function animate() {
         grid.update()
 
         // spawn projectiles
-        if (frames % 199 === 0 && grid.invaders.length > 0) {
+        if (frames % 199 === 0 && grid.invaders.length > 0 && continueShooting) {
            soundsEffect.enemyShootSound.play();
-           grid.invaders[Math.floor(Math.random() * grid.invaders.
-            length)].shoot(
-                invaderProjectiles
-                )
+            grid.invaders[Math.floor(Math.random() * grid.invaders.length)].shoot(invaderProjectiles);
         }
 
           // projectiles hit enemy
