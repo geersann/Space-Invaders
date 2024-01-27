@@ -3,8 +3,8 @@
 export class StartBackground {
     constructor() {
         this.position = {
-            x: 230,
-            y: 200
+            x: 150,
+            y: 100
         };
 
         this.velocity = {
@@ -18,8 +18,8 @@ export class StartBackground {
         image.src = "./img/startScreenBackground.png";
         image.onload = () => {
             this.image = image;
-            this.width = image.width / 0.7;
-            this.height = image.height / 0.7;
+            this.width = image.width / 1;
+            this.height = image.height / 1;
         };
     }
 
@@ -53,8 +53,8 @@ export class SoundIcon {
         this.image1 = new Image();
         this.image1.src = "./img/soundIcon.jpg";
         this.image1.onload = () => {
-            this.width = this.image1.width / 0.7;
-            this.height = this.image1.height / 0.7;
+            this.width = this.image1.width / 1;
+            this.height = this.image1.height / 1;
         };
 
         this.image2 = new Image();
@@ -67,8 +67,8 @@ export class SoundIcon {
     toggleImage() {
         this.currentImage = (this.currentImage === this.image1) ? this.image2 : this.image1;
 
-        this.width = this.currentImage.width / 0.7;
-        this.height = this.currentImage.height / 0.7;
+        this.width = this.currentImage.width / 1;
+        this.height = this.currentImage.height / 1;
     }
 
     draw() {
@@ -96,7 +96,7 @@ export class Player {
         const image = new Image()
         image.src = "./img/spaceship.png"
         image.onload = () => {
-            const scale = 0.15
+            const scale = 0.1
             this.image = image
             this.width = image.width * scale
             this.height = image.height * scale 
@@ -224,7 +224,7 @@ export class Invader {
         const image = new Image()
         image.src = "./img/invader.png"
         image.onload = () => {
-            const scale = 1
+            const scale = 0.7
             this.image = image
             this.width = image.width * scale
             this.height = image.height * scale 
@@ -276,7 +276,7 @@ export class Grid {
         }
 
         this.velocity = {
-            x: 3,
+            x: 1.5,
             y: 0
         }
 
@@ -292,8 +292,8 @@ export class Grid {
                 this.invaders.push(
                     new Invader({
                         position: {
-                            x: x * 30,
-                            y: y * 30
+                            x: x * 20,
+                            y: y * 20
                         }
                     })
                 );

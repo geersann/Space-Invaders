@@ -5,6 +5,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     background-color: rgb(73 4 151);
 }
 
@@ -27,18 +28,18 @@ body{
     pointer-events: none;
     position: absolute;
     color: white;
-    font-family: 'Pixelify Sans', sans-serif; 
-    font-size: 50px;
-    top: 595px;
-    right: 722px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 45px;
+    top: 386px;
+    right: 459px;
     
 }
 .title{
     pointer-events: none;
     position: absolute;
-    font-size: 92px;
-    right: 432px;
-    bottom: 320px;
+    font-size: 72px;
+    left: 221px;
+    bottom: 208px;
     font-family: 'Pixelify Sans', sans-serif;
     background-clip: text;
     -webkit-background-clip: text;
@@ -58,8 +59,8 @@ body{
     pointer-events: none;
     position: absolute;
     font-size: 72px;
-    left: 543px;
-    top: 277px;
+    left: 322px;
+    top: 174px;
     font-family: 'Pixelify Sans', sans-serif;
     -webkit-background-clip: text;
     color: transparent;
@@ -79,8 +80,8 @@ body{
     position: absolute;
     font-family: 'Pixelify Sans', sans-serif;
     font-size: 45px;
-    top: 394px;
-    left: 543px;
+    top: 280px;
+    left: 318px;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -100,137 +101,31 @@ body{
     position: absolute;
     color: white;
     font-family: 'Pixelify Sans', sans-serif;
-    font-size: 50px;
-    top: 591px;
-    left: 659px;
+    font-size: 45px;
+    top: 384px;
+    left: 433px;
 }
 .hidden {
     display: none;
 }
 .canvas {
     box-shadow: 13px 24px 12px 12px rgba(28, 0, 0, 0.2);
-    
-    
 }
 .instruction {
     pointer-events: none;
-}
-.key-m {
-    display: block;
-    position: absolute;
-    border: 10px;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    max-width: 50px;
-    box-shadow: 7px 14px 12px 3px #1a7cb5;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
-    border: 6px solid black;
-    left: 770px;
-    bottom: 96px;
-}
-.key-m-desribe {
-    font-size: 40px;
-    font-family: 'Pixelify Sans', sans-serif;
-    position: absolute;
-    left: 880px;
-    bottom: 104px;
-    font-weight: bold;
-}
-.key-left {
-    display: block;
-    position: absolute;
-    border: 10px;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    max-width: 50px;
-    box-shadow: 7px 14px 12px 3px #1a7cb5;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
-    border: 6px solid black;
-    left: 1110px;
-    bottom: 96px;
-}
-.key-right {
-    display: block;
-    position: absolute;
-    border: 10px;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    max-width: 50px;
-    box-shadow: 7px 14px 12px 3px #1a7cb5;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
-    border: 6px solid black;
-    left: 1170px;
-    bottom: 96px;
-}
-.keys-lefrig-desribe {
-    font-size: 40px;
-    font-family: 'Pixelify Sans', sans-serif;
-    position: absolute;
-    left: 1270px;
-    bottom: 104px;
-    font-weight: bold;
-}
-.key-space {
-    display: block;
-    position: absolute;
-    border: 10px;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    max-width: 210px;
-    box-shadow: 7px 14px 12px 3px #1a7cb5;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
-    border: 6px solid black;
-    left: 1470px;
-    bottom: 96px;
-}
-.key-space-desribe {
-    font-size: 40px;
-    font-family: 'Pixelify Sans', sans-serif;
-    position: absolute;
-    left: 1740px;
-    bottom: 104px;
-    font-weight: bold;
-}
-.stand {
-    visibility: hidden;
-}
-th, td {
-    border: 1px solid black;
-    text-align: left;
-    padding-right: 50px;
-    padding-left: 0px;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    display: flex;
+    flex-direction: row;
 }
 .score-title{
+    margin-top: 100px;
     color: black;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     font-size: 55px;
     font-family: 'Pixelify Sans', sans-serif;
-    position: relative;
-    right: -95px;
-    bottom: -50px;
-    filter: drop-shadow(2px 4px 6px #1a7cb5);
+    filter: drop-shadow(2px 4px 6px #990000);
 }
-.score-table{
-    margin-top: 20px;
-    left: -250px;
-    top: -350px;
-    font-size: 32px;
-    font-family: 'Pixelify Sans', sans-serif;
-    
-}
-.score-page{
-    display: flex;
-    flex-direction: column;
-    margin-right: 50px;
-    position: relative;
-    left: -217px;
-    top: -269px;
-}
-
 
 @keyframes move {
     0% {

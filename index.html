@@ -1,53 +1,26 @@
 <link rel="stylesheet" href="styles.css">
 
-
-<div class = "score-page">
-    <h2 class = "score-title">SCORE TAB</h2>
-    <table class = "score-table">
-        <thead>
-            <tr>
-                <td>#</td>
-                <td>Name</td>
-                <td>Total Score</td>
-            </tr>
-        </thead>
-        <tbody id="scoreSlide">
-            <tr>
-                <td>1</td>
-                <td>Player</td>
-                <td>16599</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div style="position: relative;">
-    <p class = "score-tab">
-        <span>Score:</span><span id="scoreEl">0</span>
-    </p>
-    <p>
-        <h1 class = "title intro">SPACE INVADERS</h1>
-        <span class = "play-button intro">PLAY</span>
-    </p>
-    <P>
-        <h1 class = "over-title">GAME OVER</h1>
-        <h3 class = "over-score">YOUR SCORE: <span id="overscoreEl">0</span></h3>
-        <span class = "menu-button">Menu</span>
-    </P>
-    <canvas class = "canvas"></canvas>
-</div>
-<div class = "instruction">
-    <div class = "key-m-instruction">
-        <p class = "key-m"><span class = "stand">.</span>M<span class = "stand">.</span></p>
-        <p class = "key-m-desribe">mute</p>
+<body>
+    <div style="position: relative">
+        <p class = "score-tab">
+            <span>Score:</span><span id="scoreEl">0</span>
+        </p>
+        <p>
+            <h1 class = "title intro">SPACE INVADERS</h1>
+            <span class = "play-button intro">PLAY</span>
+        </p>
+        <P>
+            <h1 class = "over-title">GAME OVER</h1>
+            <h3 class = "over-score">YOUR SCORE: <span id="overscoreEl">0</span></h3>
+            <span class = "menu-button">Menu</span>
+        </P>
+        <canvas class = "canvas"></canvas>
     </div>
-    <div class = "keys-left-rigth-instruction">
-        <p class = "key-left"><span class = "stand">.</span>A<span class = "stand">.</span></p>
-        <p class = "key-right"><span class = "stand">.</span>D<span class = "stand">.</span></p>
-        <p class = "keys-lefrig-desribe">move</p>
+    <div class = "instruction">
+        <img src="./img/instruction.png" alt="Instruction">
     </div>
-    <div>
-        <p class = "key-space"><span class = "stand">.....</span>SPACE<span class = "stand">.....</span></p>
-        <p class = "key-space-desribe">shoot</p>
+    <div class = "score-page">
+        <h2 class = "score-title">PREVIOUS SCORE<span id="scoreSlide"></span></h2>
     </div>
-</div>
+</body>
 <script type = "module" src = "index.js"></script>

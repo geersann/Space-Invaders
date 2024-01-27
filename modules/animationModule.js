@@ -14,8 +14,8 @@ export let randomInterval = Math.floor(Math.random() * 500 + 500);
 export class StartButton {
     constructor() {
         this.position = {
-            x: 610,
-            y: 570
+            x: 410,
+            y: 370
         };
 
         this.velocity = {
@@ -30,8 +30,8 @@ export class StartButton {
         image.src = "./img/button.png";
         image.onload = () => {
             this.image = image;
-            this.width = image.width / 0.5;
-            this.height = image.height / 0.5;
+            this.width = image.width / 0.7;
+            this.height = image.height / 0.7;
 
             this.handleCanvasClick = this.handleCanvasClick.bind(this);
             this.handleGameOverClick = this.handleGameOverClick.bind(this);
@@ -122,12 +122,12 @@ export const loadScore = () => {
     score = parseInt(window.localStorage.getItem("score"), 10) || 0;
 
     const textElement = document.getElementById("scoreSlide");
+    scoreSlide.style.color = "#e60000";
+    scoreSlide.style.filter = 'drop-shadow(1px 1px 10px #990000)';
 
-    const newRow = document.createElement("tr");
+    const newRow = document.createElement("p");
     newRow.innerHTML = `
-        <td>1</td>
-        <td>Player</td>
-        <td>${score}</td>
+        <p>${score}</p>
     `;
     textElement.appendChild(newRow);
 }
