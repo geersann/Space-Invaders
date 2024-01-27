@@ -92,6 +92,27 @@ body{
     background-size: 400%, 400%;
     animation: move 10s ease infinite;
 }
+.over-new-record{
+    display: none;
+}
+.over-new-record.active{
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 45px;
+    top: 280px;
+    left: 311px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(45deg, deeppink, blueviolet,
+    indigo, red, darkorange,
+    yellow, lime, mediumaquamarine,
+    aqua, blue, olive);
+    background-size: 400%, 400%;
+    animation: move 10s ease infinite;
+}
 .menu-button{
     display: none;
 }
@@ -117,6 +138,7 @@ body{
     flex-direction: row;
 }
 .score-title{
+    pointer-events: none;
     margin-top: 100px;
     color: black;
     display: flex;

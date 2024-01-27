@@ -3,7 +3,8 @@ import { canvas, c, player, soundsEffect,
     soundIcon, particles, invaderProjectiles,
     Projectiles, grids, keys, overTitle,
     isActive, menuButton, scoreTab,
-    scoreEl, overscoreEl, overScore,
+    scoreEl, overscoreEl, overScore, overNewRecord,
+    newRecordEl
     } from "../index.js";
 import { Grid, Particle} from "./classesModule.js";
 
@@ -11,6 +12,7 @@ export let frames;
 export let score = 0;
 export let randomInterval = Math.floor(Math.random() * 500 + 500);
 let continueShooting = true;
+let previousScore = parseInt(window.localStorage.getItem("score"), 10) || 0;
 
 export class StartButton {
     constructor() {
@@ -116,7 +118,10 @@ export class StartButton {
 }
 
 export const saveScore = () => {
-    window.localStorage.setItem("score", score);
+    if (score > previousScore) {
+        window.localStorage.setItem("score", score);
+        previousScore = score;  // Оновлюємо previousScore після збереження нового рекорду
+    }
 }
 
 export const loadScore = () => {
@@ -232,7 +237,14 @@ export function animate() {
                     setTimeout(() => {
                         menuButton.classList.toggle("active");
                         overTitle.classList.toggle("active");
-                        overScore.classList.toggle("active");
+                        if (score > previousScore) {
+                            // Якщо так, то зберігаємо новий рекорд
+                            saveScore();
+                            overNewRecord.classList.toggle("active");
+                        } else {
+                            // Інакше, показуємо поточний рекорд
+                            overScore.classList.toggle("active");
+                        }
                         scoreTab.classList.remove("active");
                         grids.forEach((grid) => {
                             grid.isActive = false;
@@ -299,6 +311,7 @@ export function animate() {
                             score += 100
                             scoreEl.innerHTML = score
                             overscoreEl.innerHTML = score
+                            newRecordEl.innerHTML = score
                             createParticles({
                               object: invader,
                               fades: true
