@@ -3,6 +3,8 @@ import { Projectile } from "./classesModule.js";
 
 export let isBackgroundSoundMuted = false;
 
+let spaceKeyPressed = false;
+
 export const handleKeyDown = (event) => {
     if (game.over) return;
 
@@ -16,19 +18,22 @@ export const handleKeyDown = (event) => {
             keys.d.pressed = true;
             break;
         case "Space":
-            soundsEffect.playerShootSound.play();
-            Projectiles.push(
-                new Projectile({
-                    position: {
-                        x: player.position.x + player.width / 2,
-                        y: player.position.y
-                    },
-                    velocity: {
-                        x: 0,
-                        y: -10
-                    }
-                })
-            );
+            if (!spaceKeyPressed) {
+                soundsEffect.playerShootSound.play();
+                Projectiles.push(
+                    new Projectile({
+                        position: {
+                            x: player.position.x + player.width / 2,
+                            y: player.position.y
+                        },
+                        velocity: {
+                            x: 0,
+                            y: -10
+                        }
+                    })
+                );
+                spaceKeyPressed = true;
+            }
             break;
         case "KeyM":
             const toggleBackgroundSound = () => {
@@ -58,6 +63,7 @@ export const handleKeyUp = (event) => {
             keys.d.pressed = false;
             break;
         case "Space":
+            spaceKeyPressed = false;
             break;
     }
 };
