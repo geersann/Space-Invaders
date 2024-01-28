@@ -28,6 +28,7 @@ export const soundIcon = new SoundIcon();
 export const Projectiles = [];
 export const grids = [];
 export const invaderProjectiles = [];
+export const bossProjectiles = [];
 export const particles = [];
 export const keys = {
     a: {

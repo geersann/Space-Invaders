@@ -193,6 +193,37 @@ export class Particle {
     }
 };
 
+export class BossParticle {
+    constructor({position, velocity, radius, color, fades}){
+        this.position = position
+        this.velocity = velocity
+
+        this.radius = radius
+        this.color = color
+        this.opacity = 1
+        this.fades = fades
+    }
+    draw() {
+        c.save()
+        c.globalAlpha = this.opacity
+        c.beginPath()
+        c.arc(this.position.x, this.position.y, this.radius, 0, 
+            Math.PI * 2)
+        c.fillStyle = this.color
+        c.fill()
+        c.closePath()
+        c.restore()
+    }
+
+    update() {
+        this.draw()
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+
+        if(this.fades) this.opacity -= 0.001
+    }
+};
+
 export class InvaderProjectile {
     constructor({position, velocity}){
         this.position = position
@@ -326,6 +357,8 @@ export class InvaderBoss {
         };
 
         const image = new Image();
+        this.bossActive = false;
+        this.bossShooting = true;
         image.src = "./img/invader-boss.webp";
         image.onload = () => {
             const scale = 0.7;
@@ -351,7 +384,7 @@ export class InvaderBoss {
     }
 
     update() {
-        if (this.image) {
+        if (this.image && this.bossActive) {
             this.draw();
             this.position.x += this.velocity.x;
             this.position.y += this.velocity.y;
@@ -359,7 +392,7 @@ export class InvaderBoss {
             if (this.position.y + this.height >= 160) {
                 this.velocity.y = 0;
             }
-            if(this.position.y + this.height > 150 && this.position.y + this.height != 160){
+            if(!game.over && this.position.y + this.height > 150 && this.position.y + this.height != 160){
                 this.velocity.x = 0.5;
             }
             if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
@@ -367,4 +400,47 @@ export class InvaderBoss {
             }
         }
     }
+
+    shoot(bossProjectiles) {
+        if(this.bossShooting) {
+            const centerX = this.position.x + this.width / 2;
+            const centerY = this.position.y + this.height / 2;
+                
+            bossProjectiles.push(new BossProjectile({
+                position: { x: centerX, y: centerY },
+                velocity: { x: 0, y: 4 }
+            }));
+            
+            bossProjectiles.push(new BossProjectile({
+                position: { x: this.position.x + this.width / 4, y: centerY },
+                velocity: { x: -1, y: 3 }
+            }));
+            
+            bossProjectiles.push(new BossProjectile({
+                position: { x: this.position.x + (3 * this.width) / 4, y: centerY },
+                velocity: { x: 1, y: 3 }
+            }));
+        }
+    }
 }
+
+export class BossProjectile {
+    constructor({position, velocity}){
+        this.position = position
+        this.velocity = velocity
+
+        this.width = 3
+        this.height = 10
+    }
+    draw() {
+       c.fillStyle = "yellow"
+       c.fillRect(this.position.x, this.position.y, this.width,
+        this.height) 
+    }
+
+    update() {
+        this.draw()
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+};

@@ -4,9 +4,10 @@ import { canvas, c, player, soundsEffect,
     Projectiles, grids, keys, overTitle,
     isActive, menuButton, scoreTab,
     scoreEl, overscoreEl, overScore, overNewRecord,
-    newRecordEl, invaderBoss
+    newRecordEl, invaderBoss, grid, bossProjectiles
     } from "../index.js";
-import { Grid, Particle} from "./classesModule.js";
+import { BossProjectile, Grid, Particle, BossParticle,
+    InvaderBoss} from "./classesModule.js";
 
 export let frames;
 export let score = 0;
@@ -14,7 +15,10 @@ export let randomInterval = Math.floor(Math.random() * 500 + 500);
 let continueShooting = true;
 let previousScore = parseInt(window.localStorage.getItem("score"), 10) || 0;
 let spawnBoss = false;
-let bossActive = false;
+export let bossActive = false;
+let lastBossShotTime = 0;
+const bossShotInterval = 700;
+let projectilesHitBossCount = 0;
 
 export class StartButton {
     constructor() {
@@ -160,7 +164,7 @@ export const starsLoop = () => {
     }
 }
 
-//create background stars
+//create explode
 export function createParticles({object, color, fades}) {
     for (let i = 0; i < 15; i++) {
         particles.push(new Particle({
@@ -172,7 +176,26 @@ export function createParticles({object, color, fades}) {
                 x: (Math.random() - 0.5) * 2,
                 y: (Math.random() - 0.5) * 2
             },
-            radius: Math.random() * 3,
+            radius: Math.random() * 3 || radius,
+            color: color || "#BAA0DE",
+            fades
+        })
+      )
+    }
+}
+
+export function createBossParticles({object, color, fades}) {
+    for (let i = 0; i < 15; i++) {
+        particles.push(new BossParticle({
+            position: {
+                x: object.position.x + object.width / 2,
+                y: object.position.y + object.height / 2
+            },
+            velocity: {
+                x: (Math.random() - 0.5) * 2,
+                y: (Math.random() - 0.5) * 2
+            },
+            radius: Math.random() * 5,
             color: color || "#BAA0DE",
             fades
         })
@@ -266,6 +289,10 @@ export function animate() {
                 }
     })
 
+    bossProjectiles.forEach(bossProjectile => {
+        bossProjectile.update()
+    })
+
     Projectiles.forEach((Projectile, index) => {
 
         if(Projectile.position.y + Projectile.radius <= 0){
@@ -344,10 +371,10 @@ export function animate() {
     })
 
     if (spawnBoss && score >= 100000) {
-        bossActive = true;     
+        invaderBoss.bossActive = true;     
         invaderBoss.update()
     }
-    if(bossActive) {
+    if(invaderBoss.bossActive) {
         grids.forEach((grid) => {
             grid.isActive = false;
             continueShooting = false;
@@ -374,6 +401,94 @@ export function animate() {
         grids.push(new Grid());
         frames = 0;
         randomInterval = Math.floor(Math.random() * 500 + 500);
+    }
+
+    //spawn Boss projectiles
+    if (invaderBoss.bossActive && invaderBoss) {
+        const currentTime = Date.now();
+    
+        if (currentTime - lastBossShotTime > bossShotInterval && invaderBoss.velocity.x != 0) {
+            invaderBoss.shoot(bossProjectiles);
+            lastBossShotTime = currentTime;
+        }
+
+        for (let i = 0; i < bossProjectiles.length; i++) {
+            const projectile = bossProjectiles[i];
+    
+            if (
+                !projectile.hit &&
+                projectile.position.x < player.position.x + player.width &&
+                projectile.position.x + projectile.width > player.position.x &&
+                projectile.position.y < player.position.y + player.height &&
+                projectile.position.y + projectile.height > player.position.y
+            ) {
+                projectile.hit = true;
+                invaderBoss.bossShooting = false;
+                createParticles({
+                    object: player,
+                    color: "white",
+                    fades: true
+                  })
+                  setTimeout(() => {
+                    player.opacity = 0
+                    game.over = true
+                    invaderBoss.velocity.y = 5;
+                    }, 0)
+                    setTimeout(() => {
+                        menuButton.classList.toggle("active");
+                        overTitle.classList.toggle("active");
+                        if (score > previousScore) {
+                            saveScore();
+                            overNewRecord.classList.toggle("active");
+                        } else {
+                            overScore.classList.toggle("active");
+                        }
+                        scoreTab.classList.remove("active");
+                        grids.forEach((grid) => {
+                            grid.isActive = false;
+                        });
+                        background.drawActive = true;
+                        startButton.drawActive = true;
+                        canvas.addEventListener("click", startButton.handleGameOverClick);
+                        saveScore();
+                        
+                    }, 3000);
+                bossProjectiles.splice(i, 1)
+                
+            }
+        }
+
+        Projectiles.forEach((playerProjectile, j) => {
+            if (
+                playerProjectile.position.y - playerProjectile.radius <= invaderBoss.position.y + invaderBoss.height &&
+                playerProjectile.position.x + playerProjectile.radius >= invaderBoss.position.x &&
+                playerProjectile.position.x - playerProjectile.radius <= invaderBoss.position.x + invaderBoss.width &&
+                playerProjectile.position.y + playerProjectile.radius >= invaderBoss.position.y
+            ) {
+                console.log("Boss lose");
+                Projectiles.splice(j, 1);
+                createParticles({
+                    object: invaderBoss,
+                    color: "green",
+                    fades: true
+                  })
+        
+                projectilesHitBossCount++;
+        
+                if (projectilesHitBossCount === 100) {
+                    console.log("Boss destroyed");
+                    invaderBoss.bossActive = false;
+                    spawnBoss = false;
+                    createBossParticles({
+                        object: invaderBoss,
+                        color: "green",
+                        fades: true,
+                    });
+                }
+            }
+        });
+    
+        invaderBoss.update();
     }
     
     frames++;
