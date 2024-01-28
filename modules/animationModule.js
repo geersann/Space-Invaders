@@ -4,7 +4,7 @@ import { canvas, c, player, soundsEffect,
     Projectiles, grids, keys, overTitle,
     isActive, menuButton, scoreTab,
     scoreEl, overscoreEl, overScore, overNewRecord,
-    newRecordEl
+    newRecordEl, invaderBoss
     } from "../index.js";
 import { Grid, Particle} from "./classesModule.js";
 
@@ -13,6 +13,8 @@ export let score = 0;
 export let randomInterval = Math.floor(Math.random() * 500 + 500);
 let continueShooting = true;
 let previousScore = parseInt(window.localStorage.getItem("score"), 10) || 0;
+let spawnBoss = false;
+let bossActive = false;
 
 export class StartButton {
     constructor() {
@@ -97,6 +99,7 @@ export class StartButton {
         }, 500)
         player.opacity = 1;
         game.over = false;
+        spawnBoss = true;
         frames = 0;
         score = 0;
 
@@ -339,6 +342,18 @@ export function animate() {
             })
         })
     })
+
+    if (spawnBoss && score >= 100000) {
+        bossActive = true;     
+        invaderBoss.update()
+    }
+    if(bossActive) {
+        grids.forEach((grid) => {
+            grid.isActive = false;
+            continueShooting = false;
+        });
+
+    }
 
     if (keys.a.pressed && player.position.x >= 0) {
         player.velocity.x = -7

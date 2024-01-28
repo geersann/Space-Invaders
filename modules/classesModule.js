@@ -317,3 +317,54 @@ export class Grid {
         }
     }
 };
+
+export class InvaderBoss {
+    constructor() {
+        this.velocity = {
+            x: 0,
+            y: 0.5
+        };
+
+        const image = new Image();
+        image.src = "./img/invader-boss.webp";
+        image.onload = () => {
+            const scale = 0.7;
+            this.image = image;
+            this.width = image.width * scale;
+            this.height = image.height * scale;
+
+            this.position = {
+                x: canvas.width / 2 - this.width / 2,
+                y: -this.height
+            };
+        };
+    }
+
+    draw() {
+        c.drawImage(
+            this.image,
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height
+        );
+    }
+
+    update() {
+        if (this.image) {
+            this.draw();
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+
+            if (this.position.y + this.height >= 160) {
+                this.velocity.y = 0;
+            }
+            if(this.position.y + this.height > 150 && this.position.y + this.height != 160){
+                this.velocity.x = 0.5;
+            }
+            if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
+                this.velocity.x = -this.velocity.x;
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import { handleKeyDown, handleKeyUp, isBackgroundSoundMuted } from "./modules/eventsModule.js";
 import { StartBackground, SoundIcon, Player, 
         Projectile, Particle, InvaderProjectile,
-        Invader, Grid} from "./modules/classesModule.js";
+        Invader, Grid, InvaderBoss} from "./modules/classesModule.js";
 import { frames, score, StartButton, animate, randomInterval,
         saveScore, loadScore, createParticles, starsLoop} from "./modules/animationModule.js";
 
@@ -20,7 +20,8 @@ canvas.height = 569
 
 export const startButton = new StartButton();
 export const isActive = (obj) => obj.isActive;
-export const player = new Player()
+export const player = new Player();
+export const invaderBoss = new InvaderBoss();
 export const grid = new Grid();
 export const background = new StartBackground();
 export const soundIcon = new SoundIcon();
