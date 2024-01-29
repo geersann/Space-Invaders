@@ -1,4 +1,5 @@
  import { canvas, c, player, soundsEffect, game, background} from "../index.js";
+ import { projectilesHitBossCount} from "./animationModule.js";
  
 export class StartBackground {
     constructor() {
@@ -350,6 +351,7 @@ export class Grid {
 };
 
 export class InvaderBoss {
+
     constructor() {
         this.velocity = {
             x: 0,
@@ -411,15 +413,19 @@ export class InvaderBoss {
                 velocity: { x: 0, y: 4 }
             }));
             
-            bossProjectiles.push(new BossProjectile({
-                position: { x: this.position.x + this.width / 4, y: centerY },
-                velocity: { x: -1, y: 3 }
-            }));
-            
-            bossProjectiles.push(new BossProjectile({
-                position: { x: this.position.x + (3 * this.width) / 4, y: centerY },
-                velocity: { x: 1, y: 3 }
-            }));
+            if (projectilesHitBossCount >= 25) {
+                bossProjectiles.push(new BossProjectile({
+                    position: { x: this.position.x + this.width / 4, y: centerY },
+                    velocity: { x: -1.5, y: 3 }
+                }));
+            }
+
+            if (projectilesHitBossCount >= 50) {
+                bossProjectiles.push(new BossProjectile({
+                    position: { x: this.position.x + (3 * this.width) / 4, y: centerY },
+                    velocity: { x: 1.5, y: 3 }
+                }));
+            }
         }
     }
 }

@@ -17,8 +17,11 @@ let previousScore = parseInt(window.localStorage.getItem("score"), 10) || 0;
 let spawnBoss = false;
 export let bossActive = false;
 let lastBossShotTime = 0;
-const bossShotInterval = 700;
-let projectilesHitBossCount = 0;
+export const bossShotInterval = 700;
+export let projectilesHitBossCount = 0;
+let directionChanged = false;
+let directionChangedSecond = false;
+const bossDestroyed = localStorage.getItem('bossDestroyed');
 
 export class StartButton {
     constructor() {
@@ -182,6 +185,16 @@ export function createParticles({object, color, fades}) {
         })
       )
     }
+}
+
+function changeDirection() {
+    const randomDirection = Math.random() < 0.5 ? -1 : 1;
+    invaderBoss.velocity.x = randomDirection * 1.7;
+    const randomInterval = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
+    
+    setTimeout(() => {
+        changeDirection();
+    }, randomInterval);
 }
 
 export function createBossParticles({object, color, fades}) {
@@ -370,7 +383,11 @@ export function animate() {
         })
     })
 
-    if (spawnBoss && score >= 100000) {
+    if (bossDestroyed === 'true') {
+    spawnBoss = false;
+    }
+
+    if (spawnBoss && score >= 5000) {
         invaderBoss.bossActive = true;     
         invaderBoss.update()
     }
@@ -474,7 +491,18 @@ export function animate() {
                   })
         
                 projectilesHitBossCount++;
-        
+
+                if (projectilesHitBossCount >= 25 && !directionChanged) {
+                    invaderBoss.velocity.x = 1;
+                    directionChanged = true;
+                }
+                
+                if (projectilesHitBossCount >= 50 && !directionChangedSecond) {
+                    console.log("Inside")
+                    changeDirection();
+                    directionChangedSecond = true;
+                }
+
                 if (projectilesHitBossCount === 100) {
                     console.log("Boss destroyed");
                     invaderBoss.bossActive = false;
@@ -484,6 +512,8 @@ export function animate() {
                         color: "green",
                         fades: true,
                     });
+
+                    localStorage.setItem('bossDestroyed', 'true');
                 }
             }
         });
