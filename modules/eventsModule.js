@@ -3,7 +3,6 @@ import { Projectile, InvaderBoss} from "./classesModule.js";
 import {projectilesHitBossCount} from "./animationModule.js";
 
 let isBackgroundSoundMuted = false;
-
 let spaceKeyPressed = false;
 
 export const handleKeyDown = (event) => {
