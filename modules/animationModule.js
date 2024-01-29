@@ -130,7 +130,7 @@ export class StartButton {
 export const saveScore = () => {
     if (score > previousScore) {
         window.localStorage.setItem("score", score);
-        previousScore = score;  // Оновлюємо previousScore після збереження нового рекорду
+        previousScore = score;
     }
 }
 
@@ -167,6 +167,13 @@ export const starsLoop = () => {
     }
 }
 
+function fadeInSound() {
+    if (soundsEffect.backgroundSound.volume <= 0.5) {
+        soundsEffect.backgroundSound.volume += 0.001; 
+        requestAnimationFrame(fadeInSound);
+    }
+}
+
 //create explode
 export function createParticles({object, color, fades}) {
     for (let i = 0; i < 15; i++) {
@@ -189,7 +196,7 @@ export function createParticles({object, color, fades}) {
 
 function changeDirection() {
     const randomDirection = Math.random() < 0.5 ? -1 : 1;
-    invaderBoss.velocity.x = randomDirection * 1.7;
+    invaderBoss.velocity.x = randomDirection * 2;
     const randomInterval = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
     
     setTimeout(() => {
@@ -277,11 +284,9 @@ export function animate() {
                         menuButton.classList.toggle("active");
                         overTitle.classList.toggle("active");
                         if (score > previousScore) {
-                            // Якщо так, то зберігаємо новий рекорд
                             saveScore();
                             overNewRecord.classList.toggle("active");
                         } else {
-                            // Інакше, показуємо поточний рекорд
                             overScore.classList.toggle("active");
                         }
                         scoreTab.classList.remove("active");
@@ -387,9 +392,11 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 5000) {
+    if (spawnBoss && score >= 1000) {
+        soundsEffect.backgroundSound.volume = 0;
+        soundsEffect.bossStartFight.play();
         invaderBoss.bossActive = true;     
-        invaderBoss.update()
+        invaderBoss.update();
     }
     if(invaderBoss.bossActive) {
         grids.forEach((grid) => {
@@ -427,6 +434,7 @@ export function animate() {
         if (currentTime - lastBossShotTime > bossShotInterval && invaderBoss.velocity.x != 0) {
             invaderBoss.shoot(bossProjectiles);
             lastBossShotTime = currentTime;
+            soundsEffect.enemyShootSound.play();
         }
 
         for (let i = 0; i < bossProjectiles.length; i++) {
@@ -449,7 +457,14 @@ export function animate() {
                   setTimeout(() => {
                     player.opacity = 0
                     game.over = true
-                    invaderBoss.velocity.y = 5;
+                    soundsEffect.bossGameover.play();
+                    soundsEffect.backgroundSound.muted = !soundsEffect.backgroundSound.muted;
+                    if (!soundsEffect.bossStartFight.muted) {
+                        soundsEffect.bossStartFight.muted = true;
+                    }
+                    if(!soundsEffect.bossFightEpic.muted) {
+                        soundsEffect.bossFightEpic.muted = true;
+                    }
                     }, 0)
                     setTimeout(() => {
                         menuButton.classList.toggle("active");
@@ -482,7 +497,6 @@ export function animate() {
                 playerProjectile.position.x - playerProjectile.radius <= invaderBoss.position.x + invaderBoss.width &&
                 playerProjectile.position.y + playerProjectile.radius >= invaderBoss.position.y
             ) {
-                console.log("Boss lose");
                 Projectiles.splice(j, 1);
                 createParticles({
                     object: invaderBoss,
@@ -493,18 +507,30 @@ export function animate() {
                 projectilesHitBossCount++;
 
                 if (projectilesHitBossCount >= 25 && !directionChanged) {
-                    invaderBoss.velocity.x = 1;
+                    invaderBoss.velocity.x = 1.5;
                     directionChanged = true;
+                    if (!soundsEffect.bossStartFight.muted) {
+                        soundsEffect.bossStartFight.muted = true;
+                    }
+                    soundsEffect.bossFightEpic.play();
                 }
                 
                 if (projectilesHitBossCount >= 50 && !directionChangedSecond) {
-                    console.log("Inside")
                     changeDirection();
                     directionChangedSecond = true;
                 }
 
                 if (projectilesHitBossCount === 100) {
-                    console.log("Boss destroyed");
+                    if(!soundsEffect.bossFightEpic.muted) {
+                        soundsEffect.bossFightEpic.muted = true;
+                    }
+                    soundsEffect.bossVictory.play();
+                    setTimeout(() => {
+                        soundsEffect.backgroundSound.currentTime = 0;
+                        soundsEffect.backgroundSound.play();
+                        fadeInSound();
+                    }, 11000)
+                    score += 1000
                     invaderBoss.bossActive = false;
                     spawnBoss = false;
                     createBossParticles({
@@ -513,6 +539,15 @@ export function animate() {
                         fades: true,
                     });
 
+                    setTimeout(() => {
+                        grids.forEach((grid) => {
+                            grid.isActive = true;
+                            continueShooting = true;
+                        });
+                    }, 5000)
+                    
+                    
+                    
                     localStorage.setItem('bossDestroyed', 'true');
                 }
             }

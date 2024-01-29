@@ -1,4 +1,4 @@
-import { handleKeyDown, handleKeyUp, isBackgroundSoundMuted } from "./modules/eventsModule.js";
+import { handleKeyDown, handleKeyUp,} from "./modules/eventsModule.js";
 import { StartBackground, SoundIcon, Player, 
         Projectile, Particle, InvaderProjectile,
         Invader, Grid, InvaderBoss} from "./modules/classesModule.js";
@@ -53,7 +53,11 @@ export const soundsEffect = {
     gameOverSound: new Audio("./sounds/gameOver.mp3"),
     gameStartSound: new Audio("./sounds/start.mp3"),
     selectSound: new Audio("./sounds/select.mp3"),
-    backgroundSound: new Audio("./sounds/backgroundMusic.wav")
+    backgroundSound: new Audio("./sounds/backgroundMusic.wav"),
+    bossStartFight: new Audio("./sounds/bossFightStart.ogg"),
+    bossFightEpic: new Audio("./sounds/bossFightEpic.ogg"),
+    bossGameover: new Audio("./sounds/bossGameOver.ogg"),
+    bossVictory: new Audio("./sounds/bossVictory.ogg"),
 };
 
 soundsEffect.playerShootSound.volume = 0.1;
@@ -63,6 +67,10 @@ soundsEffect.gameOverSound.volume = 0.1;
 soundsEffect.gameStartSound.volume = 0.1;
 soundsEffect.selectSound.volume = 0.1;
 soundsEffect.backgroundSound.volume = 0.5;
+soundsEffect.bossStartFight.volume = 0.5;
+soundsEffect.bossFightEpic.volume = 0.5;
+soundsEffect.bossGameover.volume = 0.5;
+soundsEffect.bossVictory.volume = 0.5;
 
 background.draw()
 soundIcon.draw()

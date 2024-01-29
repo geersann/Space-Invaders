@@ -355,7 +355,7 @@ export class InvaderBoss {
     constructor() {
         this.velocity = {
             x: 0,
-            y: 0.5
+            y: 1
         };
 
         const image = new Image();
@@ -400,6 +400,12 @@ export class InvaderBoss {
             if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
                 this.velocity.x = -this.velocity.x;
             }
+            if(game.over) {
+                this.velocity = {
+                    x: 0,
+                    y: 0.7
+                }
+            }
         }
     }
 
@@ -410,20 +416,20 @@ export class InvaderBoss {
                 
             bossProjectiles.push(new BossProjectile({
                 position: { x: centerX, y: centerY },
-                velocity: { x: 0, y: 4 }
+                velocity: { x: 0, y: 5 }
             }));
             
             if (projectilesHitBossCount >= 25) {
                 bossProjectiles.push(new BossProjectile({
                     position: { x: this.position.x + this.width / 4, y: centerY },
-                    velocity: { x: -1.5, y: 3 }
+                    velocity: { x: -1.5, y: 4 }
                 }));
             }
 
             if (projectilesHitBossCount >= 50) {
                 bossProjectiles.push(new BossProjectile({
                     position: { x: this.position.x + (3 * this.width) / 4, y: centerY },
-                    velocity: { x: 1.5, y: 3 }
+                    velocity: { x: 1.5, y: 4 }
                 }));
             }
         }

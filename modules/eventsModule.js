@@ -1,7 +1,8 @@
-import { game, keys, Projectiles, soundsEffect, player, soundIcon} from "../index.js";
-import { Projectile } from "./classesModule.js";
+import { game, keys, Projectiles, soundsEffect, player, soundIcon, invaderBoss} from "../index.js";
+import { Projectile, InvaderBoss} from "./classesModule.js";
+import {projectilesHitBossCount} from "./animationModule.js";
 
-export let isBackgroundSoundMuted = false;
+let isBackgroundSoundMuted = false;
 
 let spaceKeyPressed = false;
 
@@ -37,16 +38,33 @@ export const handleKeyDown = (event) => {
             break;
         case "KeyM":
             const toggleBackgroundSound = () => {
-                if (isBackgroundSoundMuted) {
-                    soundsEffect.backgroundSound.play();
-                } else {
-                    soundsEffect.backgroundSound.pause();
+                if (invaderBoss.bossActive && projectilesHitBossCount < 25) {
+                    if (isBackgroundSoundMuted) {
+                        soundsEffect.bossStartFight.volume = 0.5;
+                    } else {
+                        soundsEffect.bossStartFight.volume = 0
+                    }
+                } 
+                else if (invaderBoss.bossActive && projectilesHitBossCount >= 25) {
+                    if (isBackgroundSoundMuted) {
+                        soundsEffect.bossFightEpic.volume = 0.5;
+                    } else {
+                        soundsEffect.bossFightEpic.volume = 0
+                    }
+                }else {
+                    if (isBackgroundSoundMuted) {
+                        soundsEffect.backgroundSound.play();
+                    } else {
+                        soundsEffect.backgroundSound.pause();
+                    }
                 }
 
                 isBackgroundSoundMuted = !isBackgroundSoundMuted;
             };
 
-            toggleBackgroundSound();
+            
+                
+            toggleBackgroundSound();  
             soundIcon.toggleImage();
             break;
     }
