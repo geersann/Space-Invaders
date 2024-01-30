@@ -4,7 +4,8 @@ import { canvas, c, player, soundsEffect,
     Projectiles, grids, keys, overTitle,
     isActive, menuButton, scoreTab,
     scoreEl, overscoreEl, overScore, overNewRecord,
-    newRecordEl, invaderBoss, grid, bossProjectiles
+    newRecordEl, invaderBoss, grid, bossProjectiles,
+    victoryTitle
     } from "../index.js";
 import { BossProjectile, Grid, Particle, BossParticle,
     InvaderBoss} from "./classesModule.js";
@@ -251,6 +252,7 @@ function bossHit() {
     }
 }
 
+
 function changeDirection() {
     const randomDirection = Math.random() < 0.5 ? -1 : 1;
     invaderBoss.velocity.x = randomDirection * 2;
@@ -262,15 +264,15 @@ function changeDirection() {
 }
 
 export function createBossParticles({object, color, fades}) {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 150; i++) {
         particles.push(new BossParticle({
             position: {
                 x: object.position.x + object.width / 2,
                 y: object.position.y + object.height / 2
             },
             velocity: {
-                x: (Math.random() - 0.5) * 2,
-                y: (Math.random() - 0.5) * 2
+                x: (Math.random() - 0.5) * 1,
+                y: (Math.random() - 0.5) * 1
             },
             radius: Math.random() * 5,
             color: color || "#BAA0DE",
@@ -422,6 +424,26 @@ export function animate() {
                               fades: true
                             })
 
+                            const animationStartTime = Date.now();
+                            const textX = invader.position.x;
+                            const textY = invader.position.y - 30;
+
+                            //score output + animation
+                            function animateText() {
+                                const currentTime = Date.now();
+                                const elapsedTime = currentTime - animationStartTime;
+    
+                                c.fillStyle = `white`;
+                                c.font = "19px Pixelify Sans";
+                                c.fillText('+100', textX, textY - (elapsedTime / 35)); // lift animation
+
+                                if (elapsedTime < 1000) {
+                                requestAnimationFrame(animateText);
+                                }
+                            }
+
+                                animateText();
+
                             grid.invaders.splice(i, 1)
                             Projectiles.splice(j, 1)
                             soundsEffect.explodeSound.play()
@@ -505,7 +527,7 @@ export function animate() {
                 projectile.position.y < player.position.y + player.height &&
                 projectile.position.y + projectile.height > player.position.y
             ) {
-                projectile.hit = true;
+                /*projectile.hit = true;
                 invaderBoss.bossShooting = false;
                 createParticles({
                     object: player,
@@ -542,7 +564,7 @@ export function animate() {
                         canvas.addEventListener("click", startButton.handleGameOverClick);
                         saveScore();
                         
-                    }, 3000);
+                    }, 3000);*/
                 bossProjectiles.splice(i, 1)
                 
             }
@@ -586,12 +608,23 @@ export function animate() {
                         soundsEffect.bossFightEpic.muted = true;
                     }
                     soundsEffect.bossVictory.play();
+                    victoryTitle.classList.toggle("active");
+                    setTimeout(() => {
+                        victoryTitle.classList.toggle("fade-out");
+                    }, 3000)
+                    setTimeout(() => {
+                        victoryTitle.classList.remove("fade-out");
+                        victoryTitle.classList.remove("active");
+                    }, 7000)
                     setTimeout(() => {
                         soundsEffect.backgroundSound.currentTime = 0;
                         soundsEffect.backgroundSound.play();
                         fadeInSound();
                     }, 11000)
                     score += 1000
+                    scoreEl.innerHTML = score
+                    overscoreEl.innerHTML = score
+                    newRecordEl.innerHTML = score
                     invaderBoss.bossActive = false;
                     spawnBoss = false;
                     createBossParticles({

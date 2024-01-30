@@ -13,6 +13,7 @@ export const overScore = document.querySelector(".over-score");
 export const overNewRecord = document.querySelector(".over-new-record");
 export const overTitle = document.querySelector(".over-title");
 export const menuButton = document.querySelector(".menu-button");
+export const victoryTitle = document.querySelector(".victory-title");
 export const canvas = document.querySelector("canvas");
 export const c = canvas.getContext("2d")
 canvas.width = 1000

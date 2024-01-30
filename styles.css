@@ -148,6 +148,24 @@ body{
     font-family: 'Pixelify Sans', sans-serif;
     filter: drop-shadow(2px 4px 6px #990000);
 }
+.victory-title{
+    visibility: hidden;
+    position: absolute;
+    font-size: 72px;
+    left: 220px;
+    top: 222px;
+    font-family: 'Pixelify Sans', sans-serif;
+    color: yellow;
+    opacity: 0;
+    transition: opacity 3s;
+}
+.victory-title.active {
+    visibility: visible;
+    opacity: 1;
+}
+.victory-title.fade-out {
+    opacity: 0;
+}
 
 @keyframes move {
     0% {
