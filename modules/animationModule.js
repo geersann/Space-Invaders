@@ -471,7 +471,7 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 1000) {
+    if (spawnBoss && score >= 100000) {
         updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();
@@ -527,7 +527,7 @@ export function animate() {
                 projectile.position.y < player.position.y + player.height &&
                 projectile.position.y + projectile.height > player.position.y
             ) {
-                /*projectile.hit = true;
+                projectile.hit = true;
                 invaderBoss.bossShooting = false;
                 createParticles({
                     object: player,
@@ -564,7 +564,7 @@ export function animate() {
                         canvas.addEventListener("click", startButton.handleGameOverClick);
                         saveScore();
                         
-                    }, 3000);*/
+                    }, 3000);
                 bossProjectiles.splice(i, 1)
                 
             }
