@@ -22,6 +22,8 @@ export let projectilesHitBossCount = 0;
 let directionChanged = false;
 let directionChangedSecond = false;
 const bossDestroyed = localStorage.getItem('bossDestroyed');
+const bossMaxHealth = 100;
+let bossCurrentHealth = 100;
 
 export class StartButton {
     constructor() {
@@ -191,6 +193,61 @@ export function createParticles({object, color, fades}) {
             fades
         })
       )
+    }
+}
+
+function updateHealthBar() {
+    drawHealthBar();
+
+}
+
+function drawHealthBar() {
+   
+    const barWidth = canvas.width;
+    const barHeight = 20;
+    const barX = 0;
+    const barY = canvas.height - barHeight;
+
+
+    const backgroundColor = 'red';
+    const fillColor = 'yellow';
+
+
+    c.fillStyle = backgroundColor;
+    c.fillRect(barX, barY, barWidth, barHeight);
+
+
+    const fillWidth = (bossCurrentHealth / bossMaxHealth) * barWidth;
+    c.fillStyle = fillColor;
+    c.fillRect(barX, barY, fillWidth, barHeight);
+
+    c.fillStyle = 'blue';
+    c.font = '21px Pixelify Sans';
+    c.fillText(`Health: ${bossCurrentHealth}/${bossMaxHealth}`, barX + 10, barY + barHeight - 5);
+
+    const centerText = 'GENERAL NIT';
+    const textWidth = c.measureText(centerText).width;
+    const textX = barX + (barWidth - textWidth) / 2;
+    const textY = barY + barHeight / 2 + 5;
+
+    c.fillText(centerText, textX, textY);
+}
+
+function resetBoss() {
+    bossCurrentHealth = bossMaxHealth;
+    updateHealthBar();
+}
+
+function bossHit() {
+    bossCurrentHealth -= 1;
+    if (bossCurrentHealth < 0) {
+        bossCurrentHealth = 0;
+    }
+
+    updateHealthBar();
+
+    if (bossCurrentHealth === 0) {
+        resetBoss();
     }
 }
 
@@ -393,6 +450,7 @@ export function animate() {
     }
 
     if (spawnBoss && score >= 100000) {
+        updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();
         invaderBoss.bossActive = true;     
@@ -503,6 +561,9 @@ export function animate() {
                     color: "green",
                     fades: true
                   })
+                console.log("Hit")
+                drawHealthBar();
+                bossHit();                
         
                 projectilesHitBossCount++;
 

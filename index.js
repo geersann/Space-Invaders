@@ -18,6 +18,8 @@ export const c = canvas.getContext("2d")
 canvas.width = 1000
 canvas.height = 569
 
+
+
 export const startButton = new StartButton();
 export const isActive = (obj) => obj.isActive;
 export const player = new Player();
