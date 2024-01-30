@@ -209,8 +209,8 @@ function drawHealthBar() {
     const barY = canvas.height - barHeight;
 
 
-    const backgroundColor = 'red';
-    const fillColor = 'yellow';
+    const backgroundColor = 'yellow';
+    const fillColor = 'red';
 
 
     c.fillStyle = backgroundColor;
@@ -449,7 +449,7 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 100000) {
+    if (spawnBoss && score >= 1000) {
         updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();
@@ -561,7 +561,7 @@ export function animate() {
                     color: "green",
                     fades: true
                   })
-                console.log("Hit")
+                soundsEffect.explodeSound.play();
                 drawHealthBar();
                 bossHit();                
         
