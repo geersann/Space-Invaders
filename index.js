@@ -3,7 +3,7 @@ import { StartBackground, SoundIcon, Player,
         Projectile, Particle, InvaderProjectile,
         Invader, Grid, InvaderBoss} from "./modules/classesModule.js";
 import { frames, score, StartButton, animate, randomInterval,
-        saveScore, loadScore, createParticles, starsLoop} from "./modules/animationModule.js";
+        saveScore, loadScore, starsLoop} from "./modules/animationModule.js";
 
 export const scoreEl = document.querySelector("#scoreEl");
 export const overscoreEl = document.querySelector("#overscoreEl")

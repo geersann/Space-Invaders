@@ -9,6 +9,9 @@ import { canvas, c, player, soundsEffect,
     } from "../index.js";
 import { BossProjectile, Grid, Particle, BossParticle,
     InvaderBoss} from "./classesModule.js";
+import { updateHealthBar, drawHealthBar, resetBoss,
+    bossHit, changeDirection, createBossParticles,
+    fadeInSound, createParticles, animateScore} from "./funcModule.js";
 
 export let frames;
 export let score = 0;
@@ -175,118 +178,6 @@ export const starsLoop = () => {
             },
             radius: Math.random() * 2,
             color: "white"
-        })
-      )
-    }
-}
-
-function fadeInSound() {
-    if (soundsEffect.backgroundSound.volume <= 0.5) {
-        soundsEffect.backgroundSound.volume += 0.001; 
-        requestAnimationFrame(fadeInSound);
-    }
-}
-
-//create explode
-export function createParticles({object, color, fades}) {
-    for (let i = 0; i < 15; i++) {
-        particles.push(new Particle({
-            position: {
-                x: object.position.x + object.width / 2,
-                y: object.position.y + object.height / 2
-            },
-            velocity: {
-                x: (Math.random() - 0.5) * 2,
-                y: (Math.random() - 0.5) * 2
-            },
-            radius: Math.random() * 3 || radius,
-            color: color || "#BAA0DE",
-            fades
-        })
-      )
-    }
-}
-
-function updateHealthBar() {
-    drawHealthBar();
-
-}
-
-function drawHealthBar() {
-   
-    const barWidth = canvas.width;
-    const barHeight = 20;
-    const barX = 0;
-    const barY = canvas.height - barHeight;
-
-
-    const backgroundColor = 'yellow';
-    const fillColor = 'red';
-
-
-    c.fillStyle = backgroundColor;
-    c.fillRect(barX, barY, barWidth, barHeight);
-
-
-    const fillWidth = (bossCurrentHealth / bossMaxHealth) * barWidth;
-    c.fillStyle = fillColor;
-    c.fillRect(barX, barY, fillWidth, barHeight);
-
-    c.fillStyle = 'blue';
-    c.font = '21px Pixelify Sans';
-    c.fillText(`Health: ${bossCurrentHealth}/${bossMaxHealth}`, barX + 10, barY + barHeight - 5);
-
-    const centerText = 'GENERAL NIT';
-    const textWidth = c.measureText(centerText).width;
-    const textX = barX + (barWidth - textWidth) / 2;
-    const textY = barY + barHeight / 2 + 5;
-
-    c.fillText(centerText, textX, textY);
-}
-
-function resetBoss() {
-    bossCurrentHealth = bossMaxHealth;
-    updateHealthBar();
-}
-
-function bossHit() {
-    bossCurrentHealth -= 100;
-    if (bossCurrentHealth < 0) {
-        bossCurrentHealth = 0;
-    }
-
-    updateHealthBar();
-
-    if (bossCurrentHealth === 0) {
-        resetBoss();
-    }
-}
-
-
-function changeDirection() {
-    const randomDirection = Math.random() < 0.5 ? -1 : 1;
-    invaderBoss.velocity.x = randomDirection * 2;
-    const randomInterval = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
-    
-    setTimeout(() => {
-        changeDirection();
-    }, randomInterval);
-}
-
-export function createBossParticles({object, color, fades}) {
-    for (let i = 0; i < 150; i++) {
-        particles.push(new BossParticle({
-            position: {
-                x: object.position.x + object.width / 2,
-                y: object.position.y + object.height / 2
-            },
-            velocity: {
-                x: (Math.random() - 0.5) * 1,
-                y: (Math.random() - 0.5) * 1
-            },
-            radius: Math.random() * 5,
-            color: color || "#BAA0DE",
-            fades
         })
       )
     }
@@ -481,7 +372,7 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 100000) {
+    if (spawnBoss && score >= 1000) {
         updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();
@@ -631,6 +522,7 @@ export function animate() {
                         soundsEffect.backgroundSound.play();
                         fadeInSound();
                     }, 11000)
+                    animateScore();
                     score += 5000
                     scoreEl.innerHTML = score
                     overscoreEl.innerHTML = score
