@@ -26,8 +26,6 @@ export let projectilesHitBossCount = 0;
 let directionChanged = false;
 let directionChangedSecond = false;
 const bossDestroyed = localStorage.getItem('bossDestroyed');
-const bossMaxHealth = 10000;
-let bossCurrentHealth = 10000;
 
 export class StartButton {
     constructor() {
