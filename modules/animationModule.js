@@ -350,7 +350,7 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 1000) {
+    if (spawnBoss && score >= 100000) {
         updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();
