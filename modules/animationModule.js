@@ -23,8 +23,8 @@ export let projectilesHitBossCount = 0;
 let directionChanged = false;
 let directionChangedSecond = false;
 const bossDestroyed = localStorage.getItem('bossDestroyed');
-const bossMaxHealth = 100;
-let bossCurrentHealth = 100;
+const bossMaxHealth = 10000;
+let bossCurrentHealth = 10000;
 
 export class StartButton {
     constructor() {
@@ -111,7 +111,17 @@ export class StartButton {
         game.over = false;
         spawnBoss = true;
         frames = 0;
-        score = 0;
+        if(bossDestroyed === 'true') {
+            score = 10000;
+            scoreEl.innerHTML = score
+            overscoreEl.innerHTML = score
+            newRecordEl.innerHTML = score
+        }else {
+            score = 0;
+            scoreEl.innerHTML = score
+            overscoreEl.innerHTML = score
+            newRecordEl.innerHTML = score
+        }
 
         const scoreTab = document.querySelector(".score-tab");
         scoreTab.classList.toggle("active");
@@ -240,7 +250,7 @@ function resetBoss() {
 }
 
 function bossHit() {
-    bossCurrentHealth -= 1;
+    bossCurrentHealth -= 100;
     if (bossCurrentHealth < 0) {
         bossCurrentHealth = 0;
     }
@@ -621,7 +631,7 @@ export function animate() {
                         soundsEffect.backgroundSound.play();
                         fadeInSound();
                     }, 11000)
-                    score += 1000
+                    score += 5000
                     scoreEl.innerHTML = score
                     overscoreEl.innerHTML = score
                     newRecordEl.innerHTML = score
