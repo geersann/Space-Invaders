@@ -1,9 +1,7 @@
 import { handleKeyDown, handleKeyUp,} from "./modules/eventsModule.js";
-import { StartBackground, SoundIcon, Player, 
-        Projectile, Particle, InvaderProjectile,
-        Invader, Grid, InvaderBoss} from "./modules/classesModule.js";
-import { frames, score, StartButton, animate, randomInterval,
-        saveScore, loadScore, starsLoop} from "./modules/animationModule.js";
+import { StartBackground, SoundIcon, Player, Grid, InvaderBoss} from "./modules/classesModule.js";
+import { StartButton, animate, loadScore} from "./modules/animationModule.js";
+import { starsLoop } from "./modules/funcModule.js";
 
 export const scoreEl = document.querySelector("#scoreEl");
 export const overscoreEl = document.querySelector("#overscoreEl")

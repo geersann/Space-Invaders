@@ -4,6 +4,8 @@ import { Particle, BossParticle} from "./classesModule.js";
 const bossMaxHealth = 10000;
 let bossCurrentHealth = 10000;
 
+
+
 export function fadeInSound() {
     if (soundsEffect.backgroundSound.volume <= 0.5) {
         soundsEffect.backgroundSound.volume += 0.001; 
@@ -11,7 +13,7 @@ export function fadeInSound() {
     }
 }
 
-//create explode
+//create explode obj
 export function createParticles({object, color, fades}) {
     for (let i = 0; i < 15; i++) {
         particles.push(new Particle({
@@ -116,9 +118,28 @@ export function createBossParticles({object, color, fades}) {
     }
 }
 
+// backgroundImgLoop
+export const starsLoop = () => {
+    for (let i = 0; i < 100; i++) {
+        particles.push(new Particle({
+            position: {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height
+            },
+            velocity: {
+                x: 0,
+                y: 0.7
+            },
+            radius: Math.random() * 2,
+            color: "white"
+        })
+      )
+    }
+}
+
 export async function animateScore() {
     const animationStartTime = Date.now();
-    const { x, y } = invaderBoss.position; // Отримання координат
+    const { x, y } = invaderBoss.position;
     const textY = y + 50;
 
     async function animateText() {
@@ -135,5 +156,5 @@ export async function animateScore() {
         }
     }
 
-    await animateText(); // Початок анімації
+    await animateText();
 }

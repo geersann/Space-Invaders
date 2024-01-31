@@ -4,14 +4,13 @@ import { canvas, c, player, soundsEffect,
     Projectiles, grids, keys, overTitle,
     isActive, menuButton, scoreTab,
     scoreEl, overscoreEl, overScore, overNewRecord,
-    newRecordEl, invaderBoss, grid, bossProjectiles,
+    newRecordEl, invaderBoss, bossProjectiles,
     victoryTitle
     } from "../index.js";
-import { BossProjectile, Grid, Particle, BossParticle,
-    InvaderBoss} from "./classesModule.js";
-import { updateHealthBar, drawHealthBar, resetBoss,
-    bossHit, changeDirection, createBossParticles,
-    fadeInSound, createParticles, animateScore} from "./funcModule.js";
+import {Grid} from "./classesModule.js";
+import { updateHealthBar, drawHealthBar, bossHit,
+        changeDirection, createBossParticles,
+        fadeInSound, createParticles, animateScore} from "./funcModule.js";
 
 export let frames;
 export let score = 0;
@@ -160,25 +159,6 @@ export const loadScore = () => {
         <p>${score}</p>
     `;
     textElement.appendChild(newRow);
-}
-
-// backgroundloop
-export const starsLoop = () => {
-    for (let i = 0; i < 100; i++) {
-        particles.push(new Particle({
-            position: {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height
-            },
-            velocity: {
-                x: 0,
-                y: 0.7
-            },
-            radius: Math.random() * 2,
-            color: "white"
-        })
-      )
-    }
 }
 
 export function animate() {
@@ -370,7 +350,7 @@ export function animate() {
     spawnBoss = false;
     }
 
-    if (spawnBoss && score >= 100000) {
+    if (spawnBoss && score >= 1000) {
         updateHealthBar();
         soundsEffect.backgroundSound.volume = 0;
         soundsEffect.bossStartFight.play();

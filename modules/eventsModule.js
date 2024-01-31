@@ -1,5 +1,5 @@
 import { game, keys, Projectiles, soundsEffect, player, soundIcon, invaderBoss} from "../index.js";
-import { Projectile, InvaderBoss} from "./classesModule.js";
+import { Projectile } from "./classesModule.js";
 import {projectilesHitBossCount} from "./animationModule.js";
 
 let isBackgroundSoundMuted = false;

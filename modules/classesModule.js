@@ -1,4 +1,4 @@
- import { canvas, c, player, soundsEffect, game, background} from "../index.js";
+ import { canvas, c, player, game} from "../index.js";
  import { projectilesHitBossCount} from "./animationModule.js";
  
 export class StartBackground {
