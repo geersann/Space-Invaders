@@ -165,7 +165,7 @@ const backgroundImage = {
 export function animate() {
     if (!game.active) return
 
-    backgroundImage.image.src = '../img/background.jpg';
+    backgroundImage.image.src = '../img/backgroundImage.jpg';
     backgroundImage.image.onload = function() {
         requestAnimationFrame(animate)
         c.drawImage(backgroundImage.image, 0, 0, canvas.width, canvas.height);
