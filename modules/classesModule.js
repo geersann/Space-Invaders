@@ -150,7 +150,7 @@ export class Projectile {
         c.beginPath()
         c.arc(this.position.x, this.position.y, this.radius, 0, 
             Math.PI * 2)
-        c.fillStyle = "red"
+        c.fillStyle = "yellow"
         c.fill()
         c.closePath()
     }
@@ -203,7 +203,7 @@ export class InvaderProjectile {
         this.height = 10
     }
     draw() {
-       c.fillStyle = "white"
+       c.fillStyle = "red"
        c.fillRect(this.position.x, this.position.y, this.width,
         this.height) 
     }
@@ -414,7 +414,7 @@ export class BossProjectile {
         this.height = 10
     }
     draw() {
-       c.fillStyle = "yellow"
+       c.fillStyle = "red"
        c.fillRect(this.position.x, this.position.y, this.width,
         this.height) 
     }

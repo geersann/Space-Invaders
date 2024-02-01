@@ -131,7 +131,7 @@ export const starsLoop = () => {
                 y: 0.7
             },
             radius: Math.random() * 2,
-            color: "white"
+            color: "#47a992"
         })
       )
     }
