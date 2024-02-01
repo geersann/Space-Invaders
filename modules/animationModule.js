@@ -165,10 +165,9 @@ const backgroundImage = {
 export function animate() {
     if (!game.active) return
 
-    backgroundImage.image.src = '../img/backgroundImage.jpg';
-    backgroundImage.image.onload = function() {
         requestAnimationFrame(animate)
-        c.drawImage(backgroundImage.image, 0, 0, canvas.width, canvas.height);
+        c.fillStyle = 'black';
+        c.fillRect(0, 0, canvas.width, canvas.height);
         let spawnActive = true;
         background.draw()
         startButton.draw()
@@ -535,5 +534,4 @@ export function animate() {
         }
         
         frames++;
-    }
 }
