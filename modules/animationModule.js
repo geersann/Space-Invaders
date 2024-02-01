@@ -159,12 +159,9 @@ export const loadScore = () => {
     `;
     textElement.appendChild(newRow);
 }
-const backgroundImage = {
-    image: new Image(),
-  };
+
 export function animate() {
     if (!game.active) return
-
         requestAnimationFrame(animate)
         c.fillStyle = 'black';
         c.fillRect(0, 0, canvas.width, canvas.height);
